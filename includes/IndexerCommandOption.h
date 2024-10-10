@@ -1,0 +1,6 @@
+#ifndef INDEXERCOMMANDOPTION_H
+#define INDEXERCOMMANDOPTION_H
+
+class IndexerCommandOption {};
+
+#endif //INDEXERCOMMANDOPTION_H
