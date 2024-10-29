@@ -1,20 +1,30 @@
 #include "../includes/lexer.h"
+#include <QDebug>
 
 
-QStringList Lexer::tokenize(QString input)
+
+void Lexer::tokenize(QString input)
 {
     // input = input.trimmed();
-    QStringList tokens = input.split(" ");
-    return tokens;
+    const QStringList token = input.split(" ");
+    this->tokens = token;
+
 }
 
 void Lexer::printTokens()
 {
-
-    for (int i = 0; i < tokens.size(); i++)
+    for (auto & token : this->tokens)
     {
-        qDebug() << tokens[i];
-        qDebug() << "";
-        // qDebug(tokens[i].toLatin1());
+        qDebug() << token;
     }
+}
+
+QString Lexer::currentToken()
+{
+    return this->tokens[this->index];
+}
+
+QString Lexer::getNextToken()
+{
+    return this->tokens[this->index++];
 }

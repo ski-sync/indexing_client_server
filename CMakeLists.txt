@@ -20,6 +20,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)
 # Define source files
 set(SOURCES
         main.cpp
+        src/lexer.cpp
         src/CommandOption.cpp
         src/interfaces/ICommand.cpp
         src/interfaces/ICommandWithOptions.cpp
@@ -36,13 +37,13 @@ set(SOURCES
         src/TypeListOption.cpp
         src/SizeExOption.cpp
         src/TypeOption.cpp
-        src/Debugging.cpp
-        src/lexer.cpp
+#        src/Debugging.cpp
 )
 
 # Define header files
 set(HEADERS
         includes/CommandOption.h
+        includes/lexer.h
         includes/interfaces/ICommand.h
         includes/interfaces/ICommandWithOptions.h
         includes/IndexerCommand.h
@@ -59,8 +60,7 @@ set(HEADERS
         includes/TypeListOption.h
         includes/SizeExOption.h
         includes/TypeOption.h
-        includes/Debugging.h
-        includes/lexer.h
+#        includes/Debugging.h
 )
 
 # Add executable
