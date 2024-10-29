@@ -2,6 +2,7 @@
 
 #ifndef ADDCOMMAND_H
 #define ADDCOMMAND_H
+#include "interface/IState.h"
 
 class AddCommand: public IState {
 public:
