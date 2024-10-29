@@ -5,10 +5,29 @@
 
 void Lexer::tokenize(QString input)
 {
-    // input = input.trimmed();
-    const QStringList token = input.split(" ");
-    this->tokens = token;
+    QStringList result;
+    QStringList quoteSplit = input.split("\"");
 
+    for (int i = 0; i < quoteSplit.size(); i++)
+    {
+        QString segment = quoteSplit[i].trimmed();
+
+        if (segment.isEmpty())
+            continue;
+
+        if (i % 2 == 0)
+        {
+            QStringList spaceSplit = segment.split(" ", Qt::SkipEmptyParts);
+            result.append(spaceSplit);
+        }
+        else
+        {
+            result.append(segment);
+        }
+    }
+
+    this->tokens = result;
+    this->index = 0;
 }
 
 void Lexer::printTokens()
