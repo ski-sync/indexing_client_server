@@ -1,9 +1,13 @@
 #ifndef SEARCHCOMMAND_H
 #define SEARCHCOMMAND_H
+#include <qlist.h>
+#include "interface/IState.h"
 
-#include "interfaces/ICommand.h"
-#include "interfaces/ISearchCommandOption.h"
-
-class SearchCommand : public ICommand, public ISearchCommandOption{};
-
+class SearchCommand: public IState {
+    QStringList args;
+public:
+    void execute() override;
+    SearchCommand();
+    ~SearchCommand() override;
+};
 #endif //SEARCHCOMMAND_H

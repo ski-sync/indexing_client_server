@@ -9,7 +9,7 @@
 #include <QMutex>
 #include <QString>
 #include <qsqldatabase.h>
-#include <../includes//Line.h>
+#include "../includes/Line.h"
 
 class Bdd
 {
