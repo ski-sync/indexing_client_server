@@ -14,8 +14,8 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_PREFIX_PATH "~/Qt/6.7.3/macos")
 
 # Find Qt packages
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Sql)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Sql)
 
 # Define source files
 set(SOURCES
@@ -37,7 +37,9 @@ set(SOURCES
         src/TypeListOption.cpp
         src/SizeExOption.cpp
         src/TypeOption.cpp
-#        src/Debugging.cpp
+        src/bdd.cpp
+        src/Debugging.cpp
+        src/Line.cpp
 )
 
 # Define header files
@@ -60,7 +62,9 @@ set(HEADERS
         includes/TypeListOption.h
         includes/SizeExOption.h
         includes/TypeOption.h
-#        includes/Debugging.h
+        includes/bdd.h
+        includes/Debugging.h
+        includes/Line.h
 )
 
 # Add executable
@@ -74,7 +78,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 )
 
 # Link Qt libraries
-target_link_libraries(${PROJECT_NAME} PRIVATE Qt${QT_VERSION_MAJOR}::Core)
+target_link_libraries(${PROJECT_NAME} PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Sql)
 
 # Installation
 include(GNUInstallDirs)
