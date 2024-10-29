@@ -41,13 +41,13 @@ set(HEADERS
         includes/Line.h
         includes/Indexer.h
         includes/IndexerThread.h
-        includes/fsm.h
         includes/interface/IState.h
         includes/AddCommand.h
         includes/enum/FsmEnum.h
         includes/enum/CommandEnum.h
         includes/search_command/created.h
         includes/search_command/Size.h
+        includes/Fsm.h
 )
 
 # Add executable
