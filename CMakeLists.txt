@@ -26,6 +26,9 @@ set(SOURCES
         src/Line.cpp
         src/Indexer.cpp
         src/IndexerThread.cpp
+        src/fsm.cpp
+        src/SearchCommand.cpp
+        src/AddCommand.cpp
 )
 
 # Define header files
@@ -36,6 +39,10 @@ set(HEADERS
         includes/Line.h
         includes/Indexer.h
         includes/IndexerThread.h
+        includes/fsm.h
+        includes/interface/IState.h
+        includes/SearchCommand.h
+        includes/AddCommand.h
 )
 
 # Add executable
