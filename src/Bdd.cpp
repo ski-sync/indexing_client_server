@@ -31,30 +31,33 @@ int Bdd::initDatabase()
         return -1;
     }
     //
-    QStringList queryTblCreate = {"CREATE TABLE IF NOT EXISTS files ("
-                             "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                             "filePath STRING,"
-                             "fileSize BIGINT,"
-                             "fileMTime DATETIME,"
-                             "fileLastModified DATETIME,"
-                             "extension STRING"
-                             ");",
-                             "CREATE TABLE IF NOT EXISTS whitelist ("
-                             "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                             "filePath STRING"
-                             ");",
-                             "CREATE TABLE IF NOT EXISTS blacklist ("
-                             "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                             "filePath STRING"
-                             ")",
-                             "CREATE TABLE IF NOT EXISTS skipped_filters"
-                              "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                              "filePath STRING"
-                              ");",
-                              "CREATE TABLE IF NOT EXISTS filters"
-                              "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                              "filePath STRING"
-                              ");"};
+    QStringList queryTblCreate = {
+        "CREATE TABLE IF NOT EXISTS files ("
+            "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+            "filePath TEXT,"
+            "fileSize BIGINT,"
+            "fileMTime DATETIME,"
+            "fileLastModified DATETIME,"
+            "extension TEXT"
+        ");",
+        "CREATE TABLE IF NOT EXISTS whitelist ("
+            "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+            "filePath TEXT"
+        ");",
+        "CREATE TABLE IF NOT EXISTS blacklist ("
+            "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+            "filePath TEXT"
+        ");",
+        "CREATE TABLE IF NOT EXISTS skipped_filters ("
+            "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+            "filePath TEXT"
+        ");",
+        "CREATE TABLE IF NOT EXISTS filters ("
+            "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+            "filePath TEXT"
+        ");"
+    };
+
 
 
     QSqlQuery query;

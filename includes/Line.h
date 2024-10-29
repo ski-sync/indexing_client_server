@@ -1,6 +1,8 @@
 #ifndef LINE_H
 #define LINE_H
 
+#include <QDateTime>
+
 class Line
 {
     QDateTime m_lastModified;
