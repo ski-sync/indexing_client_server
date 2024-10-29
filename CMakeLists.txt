@@ -25,6 +25,8 @@ set(SOURCES
         src/Debugging.cpp
         src/Line.cpp
         src/fsm.cpp
+        src/SearchCommand.cpp
+        src/AddCommand.cpp
 )
 
 # Define header files
@@ -34,6 +36,9 @@ set(HEADERS
         includes/Debugging.h
         includes/Line.h
         includes/fsm.h
+        includes/interface/IState.h
+        includes/SearchCommand.h
+        includes/AddCommand.h
 )
 
 # Add executable
