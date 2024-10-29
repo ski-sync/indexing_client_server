@@ -21,19 +21,21 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Sql)
 set(SOURCES
         main.cpp
         src/lexer.cpp
-        src/bdd.cpp
+        src/Bdd.cpp
         src/Debugging.cpp
         src/Line.cpp
-        src/fsm.cpp
+        src/Indexer.cpp
+        src/IndexerThread.cpp
 )
 
 # Define header files
 set(HEADERS
         includes/lexer.h
-        includes/bdd.h
+        includes/Bdd.h
         includes/Debugging.h
         includes/Line.h
-        includes/fsm.h
+        includes/Indexer.h
+        includes/IndexerThread.h
 )
 
 # Add executable

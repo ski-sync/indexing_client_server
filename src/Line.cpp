@@ -1,6 +1,6 @@
 #include <QDateTime>
 
-#include "../includes/line.h"
+#include "../includes/Line.h"
 
 Line::Line(QDateTime lastModified, QDateTime creationDate, quint64 size, QString extension, QString path)
     : m_lastModified(lastModified), m_creationDate(creationDate), m_size(size), m_extension(extension), m_path(path)

@@ -1,6 +1,3 @@
-//
-// Created by Enzo Parriel on 29/10/2024.
-//
 
 #ifndef BDD_H
 #define BDD_H
