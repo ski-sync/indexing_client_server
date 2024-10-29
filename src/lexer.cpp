@@ -3,7 +3,7 @@
 
 
 
-void Lexer::tokenize(QString input)
+void Lexer::tokenize(const QString &input)
 {
     QStringList result;
     QStringList quoteSplit = input.split("\"");

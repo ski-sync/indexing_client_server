@@ -7,7 +7,7 @@ class Lexer {
     QStringList tokens;
     int64_t index = 0;
 public:
-    void tokenize(QString input);
+    void tokenize(const QString &input);
     void printTokens();
     QString getNextToken();
     QString currentToken();
