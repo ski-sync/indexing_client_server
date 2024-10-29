@@ -37,6 +37,7 @@ set(SOURCES
         src/SizeExOption.cpp
         src/TypeOption.cpp
         src/Debugging.cpp
+        src/lexer.cpp
 )
 
 # Define header files
@@ -59,6 +60,7 @@ set(HEADERS
         includes/SizeExOption.h
         includes/TypeOption.h
         includes/Debugging.h
+        includes/lexer.h
 )
 
 # Add executable
