@@ -1,4 +1,4 @@
-#include "../includes/lexer.h"
+#include "../includes/Lexer.h"
 #include <QDebug>
 
 
