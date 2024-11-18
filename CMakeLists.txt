@@ -26,7 +26,6 @@ set(SOURCES
         src/Line.cpp
         src/Indexer.cpp
         src/IndexerThread.cpp
-        src/fsm.cpp
         src/AddCommand.cpp
         src/interface/IState.cpp
         src/search_command/Created.cpp
@@ -45,9 +44,11 @@ set(HEADERS
         includes/AddCommand.h
         includes/enum/FsmEnum.h
         includes/enum/CommandEnum.h
-        includes/search_command/created.h
+        includes/search_command/Created.h
         includes/search_command/Size.h
-        includes/Fsm.h
+        includes/enum/OptionEnum.h
+        includes/interface/ICommand.h
+        src/interface/ICommand.cpp
 )
 
 # Add executable

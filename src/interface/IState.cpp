@@ -1,6 +1,6 @@
-#include "../includes/interface/IState.h"
+#include "../../includes/interface/IState.h"
 #include <QDebug>
-
+State IState::state = State::UNKNOWN;
 QString IState::get_state_to_string() {
     switch (state) {
         case State::UNKNOWN:
@@ -43,6 +43,8 @@ State IState::get_string_to_state(QString state) {
         return State::TYPE;
     } else if (state == "ERROR") {
         return State::ERROR;
+    } else {
+        return State::UNKNOWN;
     }
 }
 

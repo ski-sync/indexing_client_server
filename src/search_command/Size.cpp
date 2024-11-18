@@ -1,4 +1,4 @@
-#include "../includes/search_command/Size.h"
+#include "../../includes/search_command/Size.h"
 
 Size::Size()
 {
