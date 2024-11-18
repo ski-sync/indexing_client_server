@@ -12,7 +12,7 @@ class ICommand {
 public:
     virtual ~ICommand() = default;
     virtual void execute() = 0;
-    QMap<Command, QStringList> ICommand::commandParse();
+    QPair<Command, QStringList> ICommand::commandParse();
     Command ICommand::stringToCommand(const QString& token);
 
 
