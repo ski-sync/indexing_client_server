@@ -12,8 +12,6 @@ public:
     void printTokens();
     QString getNextToken();
     QString currentToken();
-    QMap<Command, QStringList> commandParse();
-    Command stringToCommand(const QString& token);
 
 
 };

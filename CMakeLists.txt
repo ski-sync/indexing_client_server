@@ -30,6 +30,12 @@ set(SOURCES
         src/interface/IState.cpp
         src/search_command/Created.cpp
         src/search_command/Size.cpp
+        src/command/Add.cpp
+        src/command/Clear.cpp
+        src/command/Get.cpp
+        src/command/IndexerCommand.cpp
+        src/command/Push.cpp
+        src/command/Search.cpp
 )
 
 # Define header files
@@ -41,7 +47,6 @@ set(HEADERS
         includes/Indexer.h
         includes/IndexerThread.h
         includes/interface/IState.h
-        includes/AddCommand.h
         includes/enum/FsmEnum.h
         includes/enum/CommandEnum.h
         includes/search_command/Created.h
@@ -49,6 +54,13 @@ set(HEADERS
         includes/enum/OptionEnum.h
         includes/interface/ICommand.h
         src/interface/ICommand.cpp
+        includes/command/Search.h
+        includes/command/Add.h
+        includes/command/IndexerCommand.h
+        includes/command/Get.h
+        includes/command/Push.h
+        includes/command/Clear.h
+        includes/enum/ListTypeEnum.h
 )
 
 # Add executable

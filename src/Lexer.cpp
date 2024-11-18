@@ -48,21 +48,4 @@ QString Lexer::getNextToken()
     return this->tokens[this->index++];
 }
 
-QMap<Command, QStringList> Lexer::commandParse() {
-    QMap<Command, QStringList> commandMap;
-    for (int i = 0; i < tokens.size(); i++) {
-        QString token = tokens[i];
-        switch (stringToCommand(token)) {
-            case Command::UNKNOWN:
-                continue;
-            default:
-                commandMap[stringToCommand(token)] = QStringList();
-                while (i + 1 < tokens.size() && stringToCommand(tokens[i + 1]) == Command::UNKNOWN) {
-                    commandMap[stringToCommand(token)].append(tokens[++i]);
-                }
-            return commandMap;
-        }
-    }
-    return commandMap;
-}
 
