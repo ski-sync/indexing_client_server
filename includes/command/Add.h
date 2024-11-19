@@ -8,6 +8,5 @@ class Add : public ICommand{
     void execute() override;
     public:
         Add();
-        ~Add() override;
 };
 #endif //ADD_H

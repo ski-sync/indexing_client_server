@@ -5,5 +5,8 @@
 
 class Clear : public ICommand
 {
+    void execute() override;
+    public:
+        Clear();
 };
 #endif //CLEAR_H

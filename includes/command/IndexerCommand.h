@@ -5,5 +5,8 @@
 
 class IndexerCommand : public ICommand
 {
+    void execute() override;
+    public:
+        IndexerCommand();
 };
 #endif //INDEXER_COMMAND_H

@@ -5,6 +5,9 @@
 
 class Push : public ICommand
 {
+    void execute() override;
+    public:
+        Push();
 };
 
 #endif //PUSH_H

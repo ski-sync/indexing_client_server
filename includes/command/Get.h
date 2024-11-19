@@ -5,6 +5,9 @@
 
 class Get : public ICommand
 {
+    void execute() override;
+    public:
+        Get();
 };
 
 #endif //GET_H
