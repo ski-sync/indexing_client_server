@@ -36,6 +36,7 @@ set(SOURCES
         src/command/Push.cpp
         src/command/Search.cpp
         src/CommandFactory.cpp
+        src/tokens.cpp
 )
 
 # Define header files
@@ -62,6 +63,7 @@ set(HEADERS
         includes/command/Clear.h
         includes/enum/ListTypeEnum.h
         includes/CommandFactory.h
+        includes/tokens.h
 )
 
 # Add executable

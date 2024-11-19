@@ -1,6 +1,28 @@
-#include "../../includes/interface/ICommand.h"
+#include "../includes/tokens.h"
 
-QPair<Command, QStringList> ICommand::commandParse() {
+
+Tokens* Tokens::instance = nullptr;
+
+Tokens::Tokens() {
+    tokens = QStringList();
+}
+
+Tokens::~Tokens() {
+    delete instance;
+}
+
+Tokens* Tokens::getInstance() {
+    if (instance == nullptr) {
+        instance = new Tokens();
+    }
+    return instance;
+}
+
+QStringList Tokens::getTokens() {
+    return tokens;
+}
+
+QPair<Command, QStringList> Tokens::commandParse() {
     if (tokens.isEmpty()) {
         return {Command::UNKNOWN, QStringList()};
     }
@@ -10,7 +32,7 @@ QPair<Command, QStringList> ICommand::commandParse() {
     return {cmd, args};
 }
 
-Command ICommand::stringToCommand(const QString& token) {
+Command Tokens::stringToCommand(const QString& token) {
     if (token == "indexer") return Command::INDEXER;
     if (token == "get") return Command::GET;
     if (token == "add") return Command::ADD;

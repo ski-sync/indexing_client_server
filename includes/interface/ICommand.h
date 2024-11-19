@@ -11,8 +11,7 @@ class ICommand {
     QStringList tokens;
 public:
     virtual void execute() = 0;
-    QPair<Command, QStringList> commandParse();
-    static Command stringToCommand(const QString& token);
+private:
     ICommand() = default;
 };
 
