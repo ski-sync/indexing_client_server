@@ -2,12 +2,13 @@
 #define ADD_H
 
 #include "../interface/ICommand.h"
+#include "qdebug.h"
 
 class Add : public ICommand{
 
     void execute() override;
-    public:
+
+public:
         Add();
-        ~Add() override;
 };
 #endif //ADD_H

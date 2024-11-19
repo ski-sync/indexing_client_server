@@ -10,7 +10,6 @@
 class ICommand {
     QStringList tokens;
 public:
-    virtual ~ICommand() = default;
     virtual void execute() = 0;
 private:
     ICommand() = default;
