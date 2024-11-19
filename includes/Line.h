@@ -1,9 +1,7 @@
-//
-// Created by Enzo Parriel on 29/10/2024.
-//
-
 #ifndef LINE_H
 #define LINE_H
+
+#include <QDateTime>
 
 class Line
 {

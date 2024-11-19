@@ -21,50 +21,48 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Sql)
 set(SOURCES
         main.cpp
         src/lexer.cpp
-        src/CommandOption.cpp
-        src/interfaces/ICommand.cpp
-        src/interfaces/ICommandWithOptions.cpp
-        src/IndexerCommand.cpp
-        src/IndexerCommandOption.cpp
-        src/GetCommand.cpp
-        src/ClearCommand.cpp
-        src/AddCommand.cpp
-        src/PushCommand.cpp
-        src/SearchCommand.cpp
-        src/interfaces/ISearchCommandOption.cpp
-        src/DateOption.cpp
-        src/SizeOption.cpp
-        src/TypeListOption.cpp
-        src/SizeExOption.cpp
-        src/TypeOption.cpp
-        src/bdd.cpp
+        src/Bdd.cpp
         src/Debugging.cpp
         src/Line.cpp
+        src/Indexer.cpp
+        src/IndexerThread.cpp
+        src/interface/IState.cpp
+        src/search_command/Created.cpp
+        src/search_command/Size.cpp
+        src/command/Add.cpp
+        src/command/Clear.cpp
+        src/command/Get.cpp
+        src/command/IndexerCommand.cpp
+        src/command/Push.cpp
+        src/command/Search.cpp
+        src/tokens.cpp
 )
 
 # Define header files
 set(HEADERS
-        includes/CommandOption.h
         includes/lexer.h
-        includes/interfaces/ICommand.h
-        includes/interfaces/ICommandWithOptions.h
-        includes/IndexerCommand.h
-        includes/IndexerCommandOption.h
-        includes/enums/EnumOption.h
-        includes/GetCommand.h
-        includes/AddCommand.h
-        includes/ClearCommand.h
-        includes/PushCommand.h
-        includes/SearchCommand.h
-        includes/interfaces/ISearchCommandOption.h
-        includes/DateOption.h
-        includes/SizeOption.h
-        includes/TypeListOption.h
-        includes/SizeExOption.h
-        includes/TypeOption.h
-        includes/bdd.h
+        includes/Bdd.h
         includes/Debugging.h
         includes/Line.h
+        includes/Indexer.h
+        includes/IndexerThread.h
+        includes/interface/IState.h
+        includes/enum/FsmEnum.h
+        includes/enum/CommandEnum.h
+        includes/search_command/Created.h
+        includes/search_command/Size.h
+        includes/enum/OptionEnum.h
+        includes/interface/ICommand.h
+        src/interface/ICommand.cpp
+        includes/command/Search.h
+        includes/command/Add.h
+        includes/command/IndexerCommand.h
+        includes/command/Get.h
+        includes/command/Push.h
+        includes/command/Clear.h
+        includes/enum/ListTypeEnum.h
+        includes/tokens.h
+        src/tokens.cpp
 )
 
 # Add executable

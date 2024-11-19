@@ -1,6 +1,3 @@
-//
-// Created by Enzo Parriel on 29/10/2024.
-//
 
 #ifndef BDD_H
 #define BDD_H
@@ -9,7 +6,7 @@
 #include <QMutex>
 #include <QString>
 #include <qsqldatabase.h>
-#include <../includes//Line.h>
+#include "../includes/Line.h"
 
 class Bdd
 {
