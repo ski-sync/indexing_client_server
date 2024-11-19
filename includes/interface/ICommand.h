@@ -12,10 +12,6 @@ class ICommand {
 public:
     virtual ~ICommand() = default;
     virtual void execute() = 0;
-    QPair<Command, QStringList> commandParse();
-    static Command stringToCommand(const QString& token);
-
-
 private:
     ICommand() = default;
 };
