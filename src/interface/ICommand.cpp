@@ -11,8 +11,7 @@ QPair<Command, QStringList> ICommand::commandParse() {
     return {cmd, args};
 }
 
-
-Command stringToCommand(const QString& token) {
+Command ICommand::stringToCommand(const QString& token) {
     if (token == "indexer") return Command::INDEXER;
     if (token == "get") return Command::GET;
     if (token == "add") return Command::ADD;

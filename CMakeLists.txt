@@ -26,7 +26,6 @@ set(SOURCES
         src/Line.cpp
         src/Indexer.cpp
         src/IndexerThread.cpp
-        src/AddCommand.cpp
         src/interface/IState.cpp
         src/search_command/Created.cpp
         src/search_command/Size.cpp
