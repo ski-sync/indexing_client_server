@@ -2,6 +2,7 @@
 #define INDEXER_COMMAND_H
 
 #include "../interface/ICommand.h"
+#include "qdebug.h"
 
 class IndexerCommand : public ICommand
 {

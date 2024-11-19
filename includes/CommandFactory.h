@@ -4,11 +4,6 @@
 
 #include "QString"
 #include "../includes/interface/ICommand.h"
-#include "../includes/Command/Add.h"
-#include "../includes/Command/Clear.h"
-#include "../includes/Command/Get.h"
-#include "../includes/Command/IndexerCommand.h"
-#include "../includes/Command/Push.h"
 #include <stdio.h>
 
 class CommandFactory
