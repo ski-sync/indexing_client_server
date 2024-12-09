@@ -11,6 +11,10 @@ Tokens::~Tokens() {
     delete instance;
 }
 
+void Tokens::setTokens(QStringList _tokens) {
+    tokens = _tokens;
+}
+
 Tokens* Tokens::getInstance() {
     if (instance == nullptr) {
         instance = new Tokens();
@@ -33,11 +37,11 @@ QPair<Command, QStringList> Tokens::commandParse() {
 }
 
 Command Tokens::stringToCommand(const QString& token) {
-    if (token == "indexer") return Command::INDEXER;
-    if (token == "get") return Command::GET;
-    if (token == "add") return Command::ADD;
-    if (token == "push") return Command::PUSH;
-    if (token == "clear") return Command::CLEAR;
-    if (token == "search") return Command::SEARCH;
+    if (token == "INDEXER") return Command::INDEXER;
+    if (token == "GET") return Command::GET;
+    if (token == "ADD") return Command::ADD;
+    if (token == "PUSH") return Command::PUSH;
+    if (token == "CLEAR") return Command::CLEAR;
+    if (token == "SEARCH") return Command::SEARCH;
     return Command::UNKNOWN;
 }

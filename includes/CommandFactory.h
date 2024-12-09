@@ -9,7 +9,7 @@
 class CommandFactory
 {
     public:
-         std::unique_ptr<ICommand> createCommand(QString commandName);
+         std::unique_ptr<ICommand> createCommand(Command commandName);
 
 };
 

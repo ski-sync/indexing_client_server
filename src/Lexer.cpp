@@ -48,4 +48,9 @@ QString Lexer::getNextToken()
     return this->tokens[this->index++];
 }
 
+QStringList Lexer::getTokens()
+{
+    return this->tokens;
+}
+
 

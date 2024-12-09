@@ -11,8 +11,8 @@ class ICommand {
     QStringList tokens;
 public:
     virtual void execute() = 0;
-private:
     ICommand() = default;
+private:
 };
 
 #endif //ICOMMAND_H

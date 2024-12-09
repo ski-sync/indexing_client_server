@@ -10,6 +10,7 @@ class Lexer {
 public:
     void tokenize(const QString &input);
     void printTokens();
+    QStringList getTokens();
     QString getNextToken();
     QString currentToken();
 

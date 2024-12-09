@@ -15,6 +15,7 @@ private:
 
 public:
     static Tokens* getInstance();
+    void setTokens(QStringList _tokens);
     QStringList getTokens();
     QPair<Command, QStringList> commandParse();
     static Command stringToCommand(const QString& token);

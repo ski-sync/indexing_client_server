@@ -6,31 +6,22 @@
 #include "../includes/Command/IndexerCommand.h"
 #include "../includes/Command/Push.h"
 
-std::unique_ptr<ICommand> CommandFactory::createCommand(QString commandName)
+std::unique_ptr<ICommand> CommandFactory::createCommand(Command commandName)
 {
-    if(commandName == "add")
+    switch (commandName)
     {
-        return std::make_unique<Add>(); // Error: no matching function for call to 'make_unique<Add>()'
-    }
-    else if(commandName == "clear")
-    {
-        return std::make_unique<Clear>();
-    }
-    else if(commandName == "get")
-    {
-        return std::make_unique<Get>();
-    }
-    else if(commandName == "indexercommand")
-    {
-        return std::make_unique<IndexerCommand>();
-    }
-    else if(commandName == "push")
-    {
-        return std::make_unique<Push>();
-    }
-    else
-    {
-        return nullptr;
+        case Command::ADD:
+            return std::make_unique<Add>();
+        case Command::CLEAR:
+            return std::make_unique<Clear>();
+        case Command::GET:
+            return std::make_unique<Get>();
+        case Command::INDEXER:
+            return std::make_unique<IndexerCommand>();
+        case Command::PUSH:
+            return std::make_unique<Push>();
+        default:
+            return nullptr;
     }
 }
 
