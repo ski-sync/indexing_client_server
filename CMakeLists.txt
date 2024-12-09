@@ -37,6 +37,9 @@ set(SOURCES
         src/command/Search.cpp
         src/CommandFactory.cpp
         src/tokens.cpp
+        src/Transition.cpp
+        src/State.cpp
+        src/Fsm.cpp
 )
 
 # Define header files
@@ -47,7 +50,6 @@ set(HEADERS
         includes/Line.h
         includes/Indexer.h
         includes/IndexerThread.h
-        includes/interface/IState.h
         includes/enum/FsmEnum.h
         includes/enum/CommandEnum.h
         includes/search_command/Created.h
@@ -64,6 +66,10 @@ set(HEADERS
         includes/enum/ListTypeEnum.h
         includes/CommandFactory.h
         includes/tokens.h
+        includes/Fsm.h
+        includes/Transition.h
+        includes/State.h
+        includes/typedef.h
 )
 
 # Add executable

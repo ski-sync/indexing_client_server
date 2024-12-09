@@ -1,4 +1,4 @@
-#include "../../includes/interface/IState.h"
+
 #include <QDebug>
 // State IState::state = State::UNKNOWN;
 // QString IState::get_state_to_string() {

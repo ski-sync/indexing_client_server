@@ -1,6 +1,5 @@
 #ifndef SIZE_H
 #define SIZE_H
-#include "../interface/IState.h"
 
 // class Size: public IState {
 // public:
