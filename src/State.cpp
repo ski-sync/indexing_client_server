@@ -1,6 +1,8 @@
 #include "../includes/State.h"
 
+
 void State::run() {
+    qDebug() << "Running state: " << name;
     func_ptr();
 }
 

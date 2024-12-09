@@ -1,6 +1,7 @@
 #ifndef STATE_H
 #define STATE_H
 #include <QString>
+#include <QDebug>
 #include "typedef.h"
 
 class Fsm;

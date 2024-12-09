@@ -186,3 +186,13 @@ QVector<QString> Bdd::get(QString table)
     }
     return result;
 }
+
+void Bdd::searchFileName(QString filename) {
+    request = "SELECT * FROM files WHERE filePath LIKE '%" + filename + "%'";
+}
+
+QString Bdd::getRequest() {
+    return request;
+}
+
+
