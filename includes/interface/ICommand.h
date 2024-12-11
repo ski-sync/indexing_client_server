@@ -1,18 +1,13 @@
-//
-// Created by louis on 18/11/2024.
-//
-
 #ifndef ICOMMAND_H
 #define ICOMMAND_H
-#include <qlist.h>
-#include "../enum/CommandEnum.h"
+
+#include <QList>
+#include "../token.h"
 
 class ICommand {
-    QStringList tokens;
 public:
-    virtual void execute() = 0;
-    ICommand() = default;
-private:
+    virtual void execute(const QList<Token> &tokens) = 0;
+    virtual ~ICommand() = default;
 };
 
-#endif //ICOMMAND_H
+#endif // ICOMMAND_H

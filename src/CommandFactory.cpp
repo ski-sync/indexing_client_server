@@ -6,22 +6,25 @@
 #include "../includes/Command/IndexerCommand.h"
 #include "../includes/Command/Push.h"
 
-std::unique_ptr<ICommand> CommandFactory::createCommand(Command commandName)
-{
-    switch (commandName)
-    {
-        case Command::ADD:
-            return std::make_unique<Add>();
-        case Command::CLEAR:
-            return std::make_unique<Clear>();
-        case Command::GET:
-            return std::make_unique<Get>();
-        case Command::INDEXER:
-            return std::make_unique<IndexerCommand>();
-        case Command::PUSH:
-            return std::make_unique<Push>();
-        default:
-            return nullptr;
+std::unique_ptr<ICommand> CommandFactory::createCommand(const QString &commandType) {
+    if (commandType == "INDEXER") {
+        qDebug() << "Creating INDEXER command";
+        return std::make_unique<IndexerCommand>();
+    } else if (commandType == "GET") {
+        qDebug() << "Creating GET command";
+        return std::make_unique<Get>();
+    } else if (commandType == "CLEAR") {
+        qDebug() << "Creating CLEAR command";
+        return std::make_unique<Clear>();
+    } else if (commandType == "ADD") {
+        qDebug() << "Creating ADD command";
+        return std::make_unique<Add>();
+    } else if (commandType == "PUSH") {
+        qDebug() << "Creating PUSH command";
+        return std::make_unique<Push>();
+    } else if (commandType == "SEARCH") {
+        qDebug() << "Creating SEARCH command";
+        return std::make_unique<Search>();
     }
+    return nullptr;
 }
-

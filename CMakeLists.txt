@@ -36,10 +36,10 @@ set(SOURCES
         src/command/Push.cpp
         src/command/Search.cpp
         src/CommandFactory.cpp
-        src/tokens.cpp
         src/Transition.cpp
         src/State.cpp
         src/Fsm.cpp
+        src/token.cpp
 )
 
 # Define header files
@@ -65,11 +65,12 @@ set(HEADERS
         includes/command/Clear.h
         includes/enum/ListTypeEnum.h
         includes/CommandFactory.h
-        includes/tokens.h
         includes/Fsm.h
         includes/Transition.h
         includes/State.h
         includes/typedef.h
+        includes/token.h
+        includes/tokenizer.h
 )
 
 # Add executable

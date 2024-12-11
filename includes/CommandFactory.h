@@ -2,15 +2,20 @@
 #ifndef COMMANDFACTORY_H
 #define COMMANDFACTORY_H
 
-#include "QString"
-#include "../includes/interface/ICommand.h"
-#include <stdio.h>
 
-class CommandFactory
-{
-    public:
-         std::unique_ptr<ICommand> createCommand(Command commandName);
+#include <memory>
 
+#include "command/Add.h"
+#include "command/Clear.h"
+#include "command/Get.h"
+#include "interface/ICommand.h"
+#include "command/IndexerCommand.h"
+#include "command/Push.h"
+#include "command/Search.h"
+
+class CommandFactory {
+public:
+    static std::unique_ptr<ICommand> createCommand(const QString &commandType);
 };
 
 
