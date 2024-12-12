@@ -12,18 +12,15 @@ public:
     void printTokens();
     void classifyAndAddToken(const QString &tokenValue);
 
-    bool isLogicalOperator(const QString &tokenValue);
-    bool isKeyword(const QString &tokenValue);
-    bool isCommand(const QString &tokenValue);
-    bool isUnitType(const QString &tokenValue);
-    bool isFlag(const QString &tokenValue);
-    bool isIndexerSubcommand(const QString &tokenValue);
-
-    bool isSize(const QString &tokenValue);
-
-    bool isListValue(const QString &tokenValue);
-
-    bool isDate();
+    static bool isLogicalOperator(const QString &tokenValue);
+    static bool isKeyword(const QString &tokenValue);
+    static bool isCommand(const QString &tokenValue);
+    static bool isUnitType(const QString &tokenValue);
+    static bool isFlag(const QString &tokenValue);
+    static bool isIndexerSubcommand(const QString &tokenValue);
+    static bool isSize(const QString &tokenValue);
+    static bool isListValue(const QString &tokenValue);
+    static bool isDate(const QString &tokenValue);
 
     QVector<Token> getTokens();
 

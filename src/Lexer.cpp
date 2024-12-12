@@ -67,7 +67,7 @@ void Lexer::classifyAndAddToken(const QString &tokenValue) {
         tokens.append(Token("SIZE", tokenValue));
     } else if (isListValue(tokenValue)) {
         tokens.append(Token("LIST_VALUE", tokenValue));
-    } else if (isDate()) {
+    } else if (isDate(tokenValue)) {
         tokens.append(Token("DATE", tokenValue));
     } else {
         tokens.append(Token("PARAM_VALUE", tokenValue));
@@ -111,8 +111,8 @@ bool Lexer::isListValue(const QString &tokenValue) {
     return tokenValue.contains(",");
 }
 
-bool Lexer::isDate() {
-    QRegularExpression dateRegex(
+bool Lexer::isDate(const QString &tokenValue) {
+    const QRegularExpression dateRegex(
         // Full date dd/mm/yyyy
         "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/([12][0-9]{3})$|"
         // Month and year mm/yyyy
@@ -123,7 +123,7 @@ bool Lexer::isDate() {
         "^[0-9]{2}$"
     );
 
-    return dateRegex.match(value).hasMatch();
+    return dateRegex.match(tokenValue).hasMatch();
 }
 
 QVector<Token> Lexer::getTokens() {

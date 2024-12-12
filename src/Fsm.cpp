@@ -71,6 +71,10 @@ void Fsm::getNextToken() {
     }
 }
 
+bool Fsm::canGetNextToken() {
+    return index < tokens.size() - 1;
+}
+
 QList<Token> Fsm::getNTokens(int size) {
     QList<Token> result;
     for (int i = index; i < qMin(index + size, tokens.size()); i++) {

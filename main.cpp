@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
     // qInstallMessageHandler(Debugging::GetCustomHandlerQDebug);
 
     // thread->start();
-    Bdd *bdd = Bdd::getInstance();
+    // Bdd *bdd = Bdd::getInstance();
     lexer->tokenize("SEARCH \"testme please\" LAST_MODIFIED BETWEEN 2 DAYS AND 3 DAYS CREATED 31/12/2020 MAX_SIZE 10M MIN_SIZE:1M SIZE:BETWEEN 10M AND 20M EXT txt,doc,xlsx TYPE image");
     lexer->printTokens();
     QList<Token> tokens = lexer->getTokens();
@@ -24,12 +24,10 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    QString commandType = tokens[0].getValue();
+    const QString commandType = tokens[0].getValue();
     qDebug() << "Command: " << commandType << " type " << tokens[0].getType();
 
-    std::unique_ptr<ICommand> command = CommandFactory::createCommand(commandType);
-
-    if (command) {
+    if (const std::unique_ptr<ICommand> command = CommandFactory::createCommand(commandType)) {
         command->execute(tokens);
     } else {
         qDebug() << "Command not found!";

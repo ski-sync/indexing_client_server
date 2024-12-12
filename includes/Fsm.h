@@ -27,9 +27,10 @@ public:
     void addTransition( State* from, State* to, ConditionPtrFunc condition );
     void addFinalState( State* state );
 
-    Token currentToken();
-
     void getNextToken();
+    Token currentToken();
+    bool canGetNextToken();
+
     QList<Token> getNTokens(int size);
 };
 
