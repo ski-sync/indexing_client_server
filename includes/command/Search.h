@@ -14,6 +14,6 @@ class Search : public ICommand {
 
 public:
     void execute(const QList<Token> &tokens) override;
-    void initStateMachine();
+    void initStateMachine() const;
 };
 #endif //SEARCH_H

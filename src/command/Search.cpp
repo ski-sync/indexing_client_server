@@ -11,7 +11,7 @@ void Search::execute(const QList<Token> &tokens) {
 
 }
 
-void Search::initStateMachine() {
+void Search::initStateMachine() const {
     auto init = new State("INIT", []() {
         qDebug() << "Running INIT state";
     });
@@ -96,6 +96,14 @@ void Search::initStateMachine() {
         qDebug() << "Running GET_UNIT";
     });
 
+    auto finish = new State("FINISH", []() {
+        qDebug() << "Running FINISH";
+    });
+
+    auto error = new State("ERROR", []() {
+        qDebug() << "Running ERROR";
+    });
+
     fsm->setInitialState(init);
     fsm->addState(get_file_name);
     fsm->addState(get_option);
@@ -117,6 +125,11 @@ void Search::initStateMachine() {
     fsm->addState(get_value);
     fsm->addState(get_token_and);
     fsm->addState(get_unit);
+    fsm->addState(finish);
+    fsm->addState(error);
+
+    fsm->addFinalState(finish);
+    fsm->addFinalState(error);
 
     fsm->addTransition(init, get_file_name, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "COMMAND" && fsm->currentToken().getValue() == "SEARCH";
