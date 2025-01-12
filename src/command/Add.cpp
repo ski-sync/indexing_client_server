@@ -8,7 +8,6 @@ void Add::execute(const QList<Token> &tokens) {
     }
     const QString listType = tokens[1].getValue();
     const QString value = tokens[2].getValue();
-    QString commandSql = "INSERT INTO ";
 
     qDebug() << "Flag" << listType;
     if (listType == "WHITELIST") {
