@@ -11,27 +11,21 @@ void Add::execute(const QList<Token> &tokens) {
     QString commandSql = "INSERT INTO ";
 
     qDebug() << "Flag" << listType;
-    switch (listType) {
-        case "WHITELIST":
-            qDebug() << "Adding to whitelist";
-            commandSql += "whitelist (value) VALUES ('" + value + "')";
-            break;
-        case "BLACKLIST":
-            qDebug() << "Adding to blacklist";
-            commandSql += "blacklist (value) VALUES ('" + value + "')";
-            break;
-        case "FILTERS":
-            qDebug() << "Adding to filters";
-            commandSql += "filters (value) VALUES ('" + value + "')";
-            break;
-        case "SKIPPED_FILTER":
-            qDebug() << "Adding to skipped filters";
-            commandSql += "skipped_filters (value) VALUES ('" + value + "')";
-            break;
-        default:
-            qDebug() << "Unknown flag";
-            break;
+    if (listType == "WHITELIST") {
+        qDebug() << "Adding to whitelist";
+        bdd->add("whitelist", value);
+    } else if (listType == "BLACKLIST") {
+        qDebug() << "Adding to blacklist";
+        bdd->add("blacklist", value);
+    } else if (listType == "FILTERS") {
+        qDebug() << "Adding to filters";
+        bdd->add("filters", value);
+    } else if (listType == "SKIPPED_FILTER") {
+        qDebug() << "Adding to skipped filters";
+        bdd->add("skipped_filters", value);
+    } else {
+        qDebug() << "Unknown flag";
+        return;
     }
-
 }
 

@@ -9,7 +9,6 @@
 class Search : public ICommand {
     Fsm *fsm = nullptr;
     QList<Token> tokens;
-    Bdd *bdd = Bdd::getInstance();
     QString commandSql;
 
 public:
