@@ -44,6 +44,8 @@ void Lexer::tokenize(const QString &input) {
         }
     }
 
+    classifyAndAddToken("EOF");
+
     index = 0;
 }
 
@@ -69,13 +71,17 @@ void Lexer::classifyAndAddToken(const QString &tokenValue) {
         tokens.append(Token("LIST_VALUE", tokenValue));
     } else if (isDate(tokenValue)) {
         tokens.append(Token("DATE", tokenValue));
+    } else if (isFormatFile(tokenValue)) {
+        tokens.append(Token("FORMAT_FILE", tokenValue));
+    } else if (tokenValue == "EOF") {
+        tokens.append(Token("EOF", tokenValue));
     } else {
         tokens.append(Token("PARAM_VALUE", tokenValue));
     }
 }
 
 bool Lexer::isLogicalOperator(const QString &tokenValue) {
-    return tokenValue == "AND" || tokenValue == "BETWEEN";
+    return tokenValue == "AND" || tokenValue == "BETWEEN" || tokenValue == "SINCE_LAST";
 }
 
 bool Lexer::isKeyword(const QString &tokenValue) {
@@ -124,6 +130,12 @@ bool Lexer::isDate(const QString &tokenValue) {
     );
 
     return dateRegex.match(tokenValue).hasMatch();
+}
+
+// make a method for all groups of form files like images, videos, documents, etc
+bool Lexer::isFormatFile(const QString &tokenValue) {
+    static QStringList formatFiles = {"image", "video", "audio", "document", "archive", "executable", "code"};
+    return formatFiles.contains(tokenValue, Qt::CaseInsensitive);
 }
 
 QVector<Token> Lexer::getTokens() {

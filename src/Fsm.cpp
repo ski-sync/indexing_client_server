@@ -20,7 +20,7 @@ void Fsm::run() {
         }
 
         if (!transitioned) {
-            qDebug() << "FSM deadlock: No valid transitions from state:" << currentState->getName();
+            qDebug() << "FSM deadlock: No valid transitions from state:" << currentState->getName() << currentToken().getValue();
             return;
         }
     }

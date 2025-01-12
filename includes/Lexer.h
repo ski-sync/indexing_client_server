@@ -21,6 +21,7 @@ public:
     static bool isSize(const QString &tokenValue);
     static bool isListValue(const QString &tokenValue);
     static bool isDate(const QString &tokenValue);
+    static bool isFormatFile(const QString &tokenValue);
 
     QVector<Token> getTokens();
 
