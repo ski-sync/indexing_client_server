@@ -11,8 +11,8 @@ class Token {
 public:
     Token() : type(""), value("") {} // Default constructor
     Token( QString _type, QString _value) : value(_value), type(_type) {}
-    QString getValue() { return value; }
-    QString getType() { return type; }
+    QString getValue() const { return value; }
+    QString getType() const { return type; }
     friend QDebug operator<<(QDebug debug, const Token &token);
 };
 

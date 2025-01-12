@@ -1,5 +1,4 @@
 #include "../../includes/command/Search.h"
-#include "../../includes/enum/OptionEnum.h"
 
 void Search::execute(const QList<Token> &tokens) {
 
@@ -567,7 +566,7 @@ void Search::initStateMachine() {
 
 
     ////////////////////////////////
-    /// OPTION_LAST_MODIFY
+    /// OPTION_CREATED
     ////////////////////////////////
 
 

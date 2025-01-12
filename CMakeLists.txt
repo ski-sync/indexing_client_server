@@ -50,11 +50,9 @@ set(HEADERS
         includes/Line.h
         includes/Indexer.h
         includes/IndexerThread.h
-        includes/enum/FsmEnum.h
         includes/enum/CommandEnum.h
         includes/search_command/Created.h
         includes/search_command/Size.h
-        includes/enum/OptionEnum.h
         includes/interface/ICommand.h
         src/interface/ICommand.cpp
         includes/command/Search.h
