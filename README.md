@@ -43,65 +43,94 @@ Ce projet est une application de recherche d'indexation de fichiers qui permet d
 ### Classes :
 ```mermaid
 classDiagram
-    class IndexerThread {
-        <<Thread>>
-    }
-    class Indexer {
-        <<QObject>>
-    }
-    class ICommand {
-    }
-    class Clear {
-    }
-    class IndexerCommand {
-    }
-    class Add {
-    }
-    class Exit {
-    }
-    class Push {
-    }
-    class Search {
-    }
-    class Get {
-    }
-    class Bdd {
-    }
-    class State {
-    }
-    class Fsm {
-    }
-    class Transition {
-    }
-    class CommandFactory {
-    }
-    class Debugging {
-    }
-    class Lexer {
-    }
-    class Line {
-    }
-    class Token {
-    }
+   class IndexerThread {
+      <<Thread>>
+      + run()
+   }
+   class Indexer {
+      <<QObject>>
+      + showIndex(QString path)
+   }
+   class ICommand {
+      + execute(QList<Token> tokens)
+   }
+   class Clear {
+      + execute()
+   }
+   class Add {
+      + execute()
+   }
+   class Search {
+      + execute(QList<Token> tokens)
+      + initStateMachine()
+   }
+   class Get {
+      + execute()
+   }
+   class Push {
+      + execute()
+   }
+   class CommandFactory {
+      + createCommand(QString commandType)
+   }
+   class Bdd {
+      + getInstance()
+      + insertdb(Line line)
+      + select(QString query)
+      + cleardb()
+      + push(QString table, QVector<QString> list)
+      + add(QString table, QString toadd)
+      + searchFileName(QString filename)
+   }
+   class Debugging {
+      + getInstance()
+      + IsLoggerActive()
+      + SetLoggerLevel(bool log)
+   }
+   class Token {
+      + getValue()
+      + getType()
+   }
+   class Lexer {
+      + normalize(QString input)
+      + tokenize(QString input)
+      + classifyAndAddToken(QString tokenValue)
+      + QVector<Token> getTokens()
+   }
+   class State {
+      + State(QString name, ActionPtrFunc func)
+      + run()
+      + setFunc(ActionPtrFunc func)
+      + getName()
+   }
+   class Transition {
+      + Transition(State start, State end, ConditionPtrFunc condition, Fsm fsm)
+      + run()
+   }
+   class Fsm {
+      + run()
+      + addState(State state)
+      + addTransition(State from, State to, ConditionPtrFunc condition)
+      + setInitialState(State state)
+      + getNextToken()
+      + currentToken()
+   }
 
-    %% Inheritance relationships
-    IndexerThread --> QThread : inherits
-    Indexer --> QObject : inherits
-    Clear --> ICommand : inherits
-    IndexerCommand --> ICommand : inherits
-    Add --> ICommand : inherits
-    Exit --> ICommand : inherits
-    Push --> ICommand : inherits
-    Search --> ICommand : inherits
-    Get --> ICommand : inherits
+   IndexerThread <-- QThread : inherits
+   Indexer <-- QObject : inherits
+   Clear <-- ICommand : inherits
+   Add <-- ICommand : inherits
+   Search <-- ICommand : inherits
+   Get <-- ICommand : inherits
+   Push <-- ICommand : inherits
+   CommandFactory --> ICommand : creates
+   Fsm *--> State
+   Fsm *--> Transition
+   Fsm *--> Token
+   Lexer --> Token : produces
+   Debugging <-- Singleton
+   Bdd <-- Singleton
 
-    %% Associations
-    Fsm --> Token : "1-to-1"
-    Fsm --> State : "1-to-1"
-    Fsm --> Transition : "1-to-1"
-    Lexer --> Token : "1-to-1"
-    CommandFactory --> ICommand : "1-to-many"
-    Search --> Token : "1-to-many"
 ```
 
 ### Explications :
