@@ -34,7 +34,7 @@ void Search::initStateMachine() {
         qDebug() << "Filename: " << filename_clean;
 
         // add to sql
-        this->commandSql += "filePath LIKE '%" + filename_clean + "%'";
+        this->commandSql += "filePath LIKE '%" + filename_clean + "%' ";
 
         // next token
         fsm->getNextToken();
@@ -212,7 +212,7 @@ void Search::initStateMachine() {
         qDebug() << "Date: " << Date.toString("yyyy-MM-dd");
 
         // add to sql
-        this->commandSql += "= '" + Date.toString("yyyy-MM-dd") + "' ";
+        this->commandSql += "LIKE '" + Date.toString("yyyy-MM-dd") + "%' ";
 
         // next token
         fsm->getNextToken();
