@@ -3,12 +3,14 @@
 
 #include <QStandardPaths>
 #include <QStorageInfo>
+#include <iostream>
 
 IndexerThread::IndexerThread()
 {
 }
 
 void IndexerThread::run() {
+    std::cout << "Thread Start";
     qDebug() << "Thread Start";
     while(1) {
         // QStorageInfo storage = QStorageInfo::root();
@@ -19,5 +21,6 @@ void IndexerThread::run() {
         index.showIndex(name);
         break;
     }
+    std::cout << "Thread Finish";
     qDebug() << "Thread Finish";
 }

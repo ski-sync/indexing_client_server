@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
         if (const std::unique_ptr<ICommand> command = CommandFactory::createCommand(commandType)) {
             command->execute(tokens);
         } else {
-            qDebug() << "Command not found!";
+            std::cout << "Command not found!";
         }
     }
 
