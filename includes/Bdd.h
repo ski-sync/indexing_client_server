@@ -33,6 +33,8 @@ public:
     QVector<QString> get(QString table);
     QString getRequest();
 
+    static QString convertListIntoSqlList(const QString &list);
+
 
     void searchFileName(QString filename);
     void searchLastModified(QString date);

@@ -8,15 +8,7 @@ void Push::execute(const QList<Token>& tokens)
         return;
     }
     const QString listType = tokens[1].getValue();
-    QString value = tokens[2].getValue();
-
-    QStringList extensionList = value.split(',');
-
-    for (QString& ext : extensionList) {
-        ext = '\'' + ext + '\'';
-    }
-
-    value = extensionList.join(",");
+    const QString value = Bdd::convertListIntoSqlList(tokens[2].getValue());
 
     if (tokens[3].getValue() != "DONE") {
         qDebug() << "Command not finished!";

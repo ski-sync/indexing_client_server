@@ -199,4 +199,14 @@ QString Bdd::getRequest() {
     return request;
 }
 
+QString Bdd::convertListIntoSqlList(const QString &list) {
+    QStringList extensionList = list.split(',');
+
+    for (QString& ext : extensionList) {
+        ext = '\'' + ext + '\'';
+    }
+
+    return extensionList.join(",");
+}
+
 

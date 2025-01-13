@@ -7,15 +7,8 @@ void Add::execute(const QList<Token> &tokens) {
         return;
     }
     const QString listType = tokens[1].getValue();
-    QString value = tokens[2].getValue();
+    const QString value = Bdd::convertListIntoSqlList(tokens[2].getValue());
 
-    QStringList extensionList = value.split(',');
-
-    for (QString& ext : extensionList) {
-        ext = '\'' + ext + '\'';
-    }
-
-    value = extensionList.join(",");
 
     qDebug() << "Flag" << listType;
     if (listType == "WHITELIST") {

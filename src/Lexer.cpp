@@ -12,6 +12,8 @@ const QVector<TokenReplacement> replacements = {
     {"SINCE LAST", "SINCE_LAST"},
     {" OR ", ","},
     {":", " "},
+    {"DAYS", "DAY"},
+
 };
 
 QString Lexer::normalize(const QString &input) {
@@ -72,7 +74,7 @@ void Lexer::classifyAndAddToken(const QString &tokenValue) {
     } else if (isDate(tokenValue)) {
         tokens.append(Token("DATE", tokenValue));
     } else if (isFormatFile(tokenValue)) {
-        tokens.append(Token("FORMAT_FILE", tokenValue));
+        tokens.append(Token("LIST_VALUE", formatFileToExtension(tokenValue)));
     } else if (tokenValue == "EOF") {
         tokens.append(Token("EOF", tokenValue));
     } else {
@@ -95,7 +97,7 @@ bool Lexer::isCommand(const QString &tokenValue) {
 }
 
 bool Lexer::isUnitType(const QString &tokenValue) {
-    static QStringList unitTypes = {"DAYS", "HOURS", "MINUTES", "MONTHS", "YEARS"};
+    static QStringList unitTypes = {"DAY", "HOURS", "MINUTES", "MONTHS", "YEARS"};
     return unitTypes.contains(tokenValue, Qt::CaseInsensitive);
 }
 
@@ -136,6 +138,21 @@ bool Lexer::isDate(const QString &tokenValue) {
 bool Lexer::isFormatFile(const QString &tokenValue) {
     static QStringList formatFiles = {"image", "video", "audio", "document", "archive", "executable", "code"};
     return formatFiles.contains(tokenValue, Qt::CaseInsensitive);
+}
+
+// this method convert type Of format file into list of extension
+QString Lexer::formatFileToExtension(const QString &formatFile) {
+    static QMap<QString, QStringList> formatFiles = {
+        {"image", {"jpg", "jpeg", "png", "gif", "bmp", "svg", "webp", "ico", "tiff", "psd", "ai", "eps", "indd", "raw"}},
+        {"video", {"mp4", "avi", "mkv", "mov", "wmv", "flv", "webm", "vob", "3gp", "3g2", "m4v", "mpg", "mpeg", "m2v", "m4v", "ts", "m2ts", "mts", "asf", "rm", "rmvb", "ogv", "ogg", "drc", "dat", "swf", "nut", "h264", "h265", "hevc", "av1", "vp8", "vp9", "avi", "flv", "f4v", "f4p", "f4a", "f4b"}},
+        {"audio", {"mp3", "wav", "flac", "aac", "ogg", "wma", "m4a", "m4r", "m4p", "m4b", "m4v", "3gp", "3ga", "3g2", "amr", "awb", "aiff", "aif", "aifc", "caf", "dts", "alac", "ape", "ac3", "eac3", "ec3", "dolby", "dolby digital", "dolby digital plus", "dolby atmos", "dolby truehd", "dts"}},
+        {"document", {"pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "odt", "ods", "odp", "txt", "rtf", "csv", "xml", "html"}},
+        {"archive", {"zip", "rar", "7z", "tar", "gz", "bz2", "xz", "z", "arj", "lzh", "ace", "uue", "bz", "cab", "jar", "iso", "dmg", "vhd", "vmdk", "vdi", "hfs", "wim", "swm", "esd", "qcow2", "vdi", "vmdk", "vhdx", "vhd", "vfd", "vfdx", "vfd", "vff", "vffx"}},
+        {"executable", {"exe", "msi", "apk", "app", "bat", "bin", "cgi", "com", "gadget", "jar", "wsf", "app", "appx", "ipa", "isp", "jar", "js", "jse", "msc", "msu", "msh", "msh1", "msh2", "mshxml", "msh1xml", "msh2xml", "ps1", "ps1xml"}},
+        {"code", {"c", "cpp", "h", "hpp", "java", "py", "js", "ts", "html", "css", "scss", "sass", "less", "php", "go", "rb", "swift"}},
+    };
+
+    return formatFiles[formatFile].join(",");
 }
 
 QVector<Token> Lexer::getTokens() {

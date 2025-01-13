@@ -22,6 +22,7 @@ public:
     static bool isListValue(const QString &tokenValue);
     static bool isDate(const QString &tokenValue);
     static bool isFormatFile(const QString &tokenValue);
+    static QString formatFileToExtension(const QString &formatFile);
 
     QVector<Token> getTokens();
 

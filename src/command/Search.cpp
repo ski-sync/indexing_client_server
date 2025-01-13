@@ -28,18 +28,22 @@ void Search::initStateMachine() {
 
         // get the filename
         const QString filename = fsm->currentToken().getValue();
-        fsm->getNextToken();
-        qDebug() << "Filename: " << filename;
+        // remove quotes
+        const QString filename_clean = filename.mid(1, filename.size() - 2);
+        qDebug() << "Filename: " << filename_clean;
 
         // add to sql
-        this->commandSql += "filename LIKE '%" + filename + "%'";
+        this->commandSql += "filename LIKE '%" + filename_clean + "%'";
+
+        // next token
+        fsm->getNextToken();
     });
 
     auto get_option = new State("GET_OPTION", [&, this]() {
         qDebug() << "Running GET_OPTION state";
 
         // add to sql
-        this->commandSql += " AND ";
+        this->commandSql += "AND ";
         qDebug() << "Command SQL: " << this->commandSql;
     });
 
@@ -67,7 +71,7 @@ void Search::initStateMachine() {
     auto option_ext = new State("OPTION_EXT", [&, this]() {
         qDebug() << "Running GET_OPTION_EXT state";
         // add to sql
-        this->commandSql += "WHERE extension IN (";
+        this->commandSql += "extension ";
 
         // next token
         fsm->getNextToken();
@@ -77,7 +81,7 @@ void Search::initStateMachine() {
         qDebug() << "Running GET_OPTION_LAST_MODIFY state";
 
         // add to sql
-        this->commandSql += "WHERE fileLastModified ";
+        this->commandSql += "fileLastModified ";
 
         // next token
         fsm->getNextToken();
@@ -87,7 +91,7 @@ void Search::initStateMachine() {
         qDebug() << "Running GET_OPTION_CREATED state";
 
         // add to sql
-        this->commandSql += "WHERE fileMTime ";
+        this->commandSql += "fileMTime ";
 
         // next token
         fsm->getNextToken();
@@ -98,7 +102,7 @@ void Search::initStateMachine() {
         qDebug() << "Running GET_OPTION_SIZE state";
 
         // add to sql
-        this->commandSql += "WHERE fileSize ";
+        this->commandSql += "fileSize ";
 
         // next token
         fsm->getNextToken();
@@ -108,7 +112,7 @@ void Search::initStateMachine() {
         qDebug() << "Running GET_OPTION_SIZE_MAX state";
 
         // add to sql
-        this->commandSql += "WHERE fileSize ";
+        this->commandSql += "fileSize ";
 
         // next token
         fsm->getNextToken();
@@ -118,7 +122,7 @@ void Search::initStateMachine() {
         qDebug() << "Running GET_OPTION_SIZE_MIN state";
 
         // add to sql
-        this->commandSql += "WHERE fileSize ";
+        this->commandSql += "fileSize ";
 
         // next token
         fsm->getNextToken();
@@ -128,7 +132,7 @@ void Search::initStateMachine() {
         qDebug() << "Running GET_OPTION_TYPE state";
 
         // add to sql
-        this->commandSql += "WHERE extension ";
+        this->commandSql += "extension ";
 
         // next token
         fsm->getNextToken();
@@ -142,8 +146,7 @@ void Search::initStateMachine() {
         qDebug() << "Size: " << size;
 
         // add to sql
-        this->commandSql += size;
-        this->commandSql += " ";
+        this->commandSql += size + " ";
 
         // next token
         fsm->getNextToken();
@@ -174,11 +177,11 @@ void Search::initStateMachine() {
         qDebug() << "Running GET_LIST state";
 
         // get the list
-        const QString list = fsm->currentToken().getValue();
+        const QString list = Bdd::convertListIntoSqlList(fsm->currentToken().getValue());
         qDebug() << "List: " << list;
 
         // add to sql
-        this->commandSql += list;
+        this->commandSql += " IN (" + list + ") ";
 
         // next token
         fsm->getNextToken();
@@ -192,7 +195,7 @@ void Search::initStateMachine() {
         qDebug() << "Value: " << value;
 
         // add to sql
-        this->commandSql += value;
+        this->commandSql += "= '" + value + "' ";
 
         // next token
         fsm->getNextToken();
@@ -203,10 +206,12 @@ void Search::initStateMachine() {
 
         // get the date
         const QString date = fsm->currentToken().getValue();
-        qDebug() << "Date: " << date;
+        QDate Date = QDate::fromString(date,"dd/MM/yyyy");
+
+        qDebug() << "Date: " << Date.toString("yyyy-MM-dd");
 
         // add to sql
-        this->commandSql += date;
+        this->commandSql += "= '" + Date.toString("yyyy-MM-dd") + "' ";
 
         // next token
         fsm->getNextToken();
@@ -220,8 +225,9 @@ void Search::initStateMachine() {
         const QString unit = fsm->currentToken().getValue();
         qDebug() << "Unit: " << unit;
 
+
         // add to sql
-        this->commandSql += unit;
+        this->commandSql += unit + " ";
 
         // next token
         fsm->getNextToken();
@@ -246,11 +252,24 @@ void Search::initStateMachine() {
         qDebug() << "Value: " << value;
 
         // add to sql
-        this->commandSql += value;
+        this->commandSql += "NOW() - INTERVAL " + value + " ";
 
         // next token
         fsm->getNextToken();
+    });
 
+    auto get_size_single = new State("GET_SIZE_SINGLE", [&, this]() {
+        qDebug() << "Running GET_SIZE_SINGLE state";
+
+        // get the size
+        const QString size = fsm->currentToken().getValue();
+        qDebug() << "Size: " << size;
+
+        // add to sql
+        this->commandSql += "= " + size + " ";
+
+        // next token
+        fsm->getNextToken();
     });
 
 
@@ -277,6 +296,7 @@ void Search::initStateMachine() {
     fsm->addState(get_unit);
     fsm->addState(get_since_last);
     fsm->addState(get_param_value);
+    fsm->addState(get_size_single);
 
     // final state
     fsm->addFinalState(finish);
@@ -371,10 +391,16 @@ void Search::initStateMachine() {
     /// OPTION_MIN_SIZE
     ////////////////////////////////
 
-    // OPTION_SIZE_MAX -> GET_SIZE
-    fsm->addTransition(option_size_max, get_size, [&, this]() {
+    // OPTION_SIZE_MAX -> GET_SIZE_SINGLE
+    fsm->addTransition(option_size_max, get_size_single, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "SIZE";
 
+        return condition;
+    });
+
+    // GET_SIZE_SINGLE -> GET_OPTION
+    fsm->addTransition(get_size_single, get_option, [&, this]() {
+        const bool condition = fsm->currentToken().getType() == "OPTION";
         return condition;
     });
 
@@ -382,18 +408,24 @@ void Search::initStateMachine() {
     /// OPTION_MAX_SIZE
     ////////////////////////////////
 
-    // OPTION_SIZE_MIN -> GET_SIZE
-    fsm->addTransition(option_size_min, get_size, [&, this]() {
+    // OPTION_SIZE_MIN -> GET_SIZE_SINGLE
+    fsm->addTransition(option_size_min, get_size_single, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "SIZE";
 
         return condition;
     });
 
+    // // GET_SIZE_SINGLE -> GET_OPTION
+    // fsm->addTransition(get_size_single, get_option, [&, this]() {
+    //     const bool condition = fsm->currentToken().getType() == "OPTION";
+    //     return condition;
+    // });
+
     ////////////////////////////////
     /// OPTION_SIZE
     ////////////////////////////////
 
-    // GET_SIZE -> GET_BETWEEN
+    // OPTION_SIZE -> GET_BETWEEN
     fsm->addTransition(option_size, get_between, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "LOGICAL_OPERATOR" && fsm->currentToken().getValue() == "BETWEEN";
 
@@ -431,12 +463,12 @@ void Search::initStateMachine() {
     /// OPTION_EXT
     ////////////////////////////////
 
-    // OPTION_EXT -> GET_VALUE
-    fsm->addTransition(option_ext, get_value, [&, this]() {
-        const bool condition = fsm->currentToken().getType() == "STRING";
-
-        return condition;
-    });
+    // // OPTION_EXT -> GET_VALUE
+    // fsm->addTransition(option_ext, get_value, [&, this]() {
+    //     const bool condition = fsm->currentToken().getType() == "STRING";
+    //
+    //     return condition;
+    // });
 
     // OPTION_EXT -> GET_LIST
     fsm->addTransition(option_ext, get_list, [&, this]() {
@@ -457,12 +489,12 @@ void Search::initStateMachine() {
     /// OPTION_TYPE
     ////////////////////////////////
 
-    // OPTION_TYPE -> GET_VALUE
-    fsm->addTransition(option_type, get_value, [&, this]() {
-        const bool condition = fsm->currentToken().getType() == "FORMAT_FILE";
-
-        return condition;
-    });
+    // // OPTION_TYPE -> GET_VALUE
+    // fsm->addTransition(option_type, get_value, [&, this]() {
+    //     const bool condition = fsm->currentToken().getType() == "FORMAT_FILE";
+    //
+    //     return condition;
+    // });
 
     // OPTION_TYPE -> GET_LIST
     fsm->addTransition(option_type, get_list, [&, this]() {
@@ -731,12 +763,6 @@ void Search::initStateMachine() {
     /// FINISH
     ////////////////////////////////
 
-    // GET_OPTION -> FINISH
-    fsm->addTransition(get_option, finish, [&, this]() {
-        const bool condition = fsm->currentToken().getType() == "EOF";
-        return condition;
-    });
-
     // GET_FILENAME -> FINISH
     fsm->addTransition(get_filename, finish, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "EOF";
@@ -763,6 +789,12 @@ void Search::initStateMachine() {
 
     // GET_PARAM_VALUE -> FINISH
     fsm->addTransition(get_param_value, finish, [&, this]() {
+        const bool condition = fsm->currentToken().getType() == "EOF";
+        return condition;
+    });
+
+    // GET_LIST -> FINISH
+    fsm->addTransition(get_list, finish, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "EOF";
         return condition;
     });
