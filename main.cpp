@@ -15,8 +15,9 @@ int main(int argc, char *argv[])
 
     // thread->start();
     // Bdd *bdd = Bdd::getInstance();
-    // lexer->tokenize("SEARCH \"testme please\" LAST_MODIFIED BETWEEN 2 DAYS AND 3 DAYS CREATED 31/12/2020 MAX_SIZE 10M MIN_SIZE:1M SIZE:BETWEEN 10M AND 20M EXT txt,doc,xlsx TYPE image");
-    lexer->tokenize("ADD WHITELIST toto");
+    lexer->tokenize("SEARCH \"testme please\" LAST_MODIFIED BETWEEN 2 DAYS AND 3 DAYS CREATED 31/12/2020 MAX_SIZE 10M MIN_SIZE:1M SIZE:BETWEEN 10M AND 20M EXT txt,doc,xlsx TYPE image");
+    // lexer->tokenize("ADD WHITELIST toto");
+    // lexer->tokenize("PUSH WHITELIST C:/ d:/user/toto /lksdjflkj/sdlkfj  DONE");
     lexer->printTokens();
 
     QList<Token> tokens = lexer->getTokens();

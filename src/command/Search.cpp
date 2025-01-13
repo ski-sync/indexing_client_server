@@ -19,6 +19,8 @@ void Search::initStateMachine() {
     auto init = new State("INIT", [&, this]() {
         qDebug() << "Running INIT state";
         this->commandSql = "SELECT * FROM files WHERE ";
+        // next token
+        fsm->getNextToken();
     });
 
     auto get_filename = new State("GET_FILENAME", [&, this]() {
@@ -26,6 +28,7 @@ void Search::initStateMachine() {
 
         // get the filename
         const QString filename = fsm->currentToken().getValue();
+        fsm->getNextToken();
         qDebug() << "Filename: " << filename;
 
         // add to sql
@@ -41,7 +44,20 @@ void Search::initStateMachine() {
     });
 
     auto finish = new State("FINISH", [&, this]() {
-        qDebug() << "Running FINISH state";
+        qDebug() << "Executing SQL Command: " << this->commandSql;
+
+           try {
+               const auto response = Bdd::getInstance()->select(this->commandSql);
+               if (response.isEmpty()) {
+                   qDebug() << "No results found.";
+               } else {
+                   for (const auto &line : response) {
+                       qDebug() << "File: " << line.path() << ", Extension: " << line.extension();
+                   }
+               }
+           } catch (const std::exception &e) {
+               qDebug() << "Error during SQL execution:" << e.what();
+           }
     });
 
     auto error = new State("ERROR", [&, this]() {
@@ -50,67 +66,191 @@ void Search::initStateMachine() {
 
     auto option_ext = new State("OPTION_EXT", [&, this]() {
         qDebug() << "Running GET_OPTION_EXT state";
+        // add to sql
+        this->commandSql += "WHERE extension IN (";
 
+        // next token
+        fsm->getNextToken();
     });
 
     auto option_last_modify = new State("OPTION_LAST_MODIFY", [&, this]() {
         qDebug() << "Running GET_OPTION_LAST_MODIFY state";
+
+        // add to sql
+        this->commandSql += "WHERE fileLastModified ";
+
+        // next token
+        fsm->getNextToken();
     });
 
     auto option_created = new State("OPTION_CREATED", [&, this]() {
         qDebug() << "Running GET_OPTION_CREATED state";
+
+        // add to sql
+        this->commandSql += "WHERE fileMTime ";
+
+        // next token
+        fsm->getNextToken();
+
     });
 
     auto option_size = new State("OPTION_SIZE", [&, this]() {
         qDebug() << "Running GET_OPTION_SIZE state";
+
+        // add to sql
+        this->commandSql += "WHERE fileSize ";
+
+        // next token
+        fsm->getNextToken();
     });
 
     auto option_size_max = new State("OPTION_SIZE_MAX", [&, this]() {
         qDebug() << "Running GET_OPTION_SIZE_MAX state";
+
+        // add to sql
+        this->commandSql += "WHERE fileSize ";
+
+        // next token
+        fsm->getNextToken();
     });
 
     auto option_size_min = new State("OPTION_SIZE_MIN", [&, this]() {
         qDebug() << "Running GET_OPTION_SIZE_MIN state";
+
+        // add to sql
+        this->commandSql += "WHERE fileSize ";
+
+        // next token
+        fsm->getNextToken();
     });
 
     auto option_type = new State("OPTION_TYPE", [&, this]() {
         qDebug() << "Running GET_OPTION_TYPE state";
+
+        // add to sql
+        this->commandSql += "WHERE extension ";
+
+        // next token
+        fsm->getNextToken();
     });
 
     auto get_size = new State("GET_SIZE", [&, this]() {
         qDebug() << "Running GET_SIZE state";
+
+        // get the size
+        const QString size = fsm->currentToken().getValue();
+        qDebug() << "Size: " << size;
+
+        // add to sql
+        this->commandSql += size;
+        this->commandSql += " ";
+
+        // next token
+        fsm->getNextToken();
     });
 
     auto get_between = new State("GET_BETWEEN", [&, this]() {
         qDebug() << "Running GET_BETWEEN state";
+
+        // add to sql
+        this->commandSql += "BETWEEN ";
+
+        // next token
+        fsm->getNextToken();
     });
 
     auto get_and = new State("GET_AND", [&, this]() {
         qDebug() << "Running GET_AND state";
+
+        // add to sql
+        this->commandSql += "AND ";
+
+        // next token
+        fsm->getNextToken();
+
     });
 
     auto get_list = new State("GET_LIST", [&, this]() {
         qDebug() << "Running GET_LIST state";
+
+        // get the list
+        const QString list = fsm->currentToken().getValue();
+        qDebug() << "List: " << list;
+
+        // add to sql
+        this->commandSql += list;
+
+        // next token
+        fsm->getNextToken();
     });
 
     auto get_value = new State("GET_VALUE", [&, this]() {
         qDebug() << "Running GET_VALUE state";
+
+        // get the value
+        const QString value = fsm->currentToken().getValue();
+        qDebug() << "Value: " << value;
+
+        // add to sql
+        this->commandSql += value;
+
+        // next token
+        fsm->getNextToken();
     });
 
     auto get_date = new State("GET_DATE", [&, this]() {
         qDebug() << "Running GET_DATE state";
+
+        // get the date
+        const QString date = fsm->currentToken().getValue();
+        qDebug() << "Date: " << date;
+
+        // add to sql
+        this->commandSql += date;
+
+        // next token
+        fsm->getNextToken();
+
     });
 
     auto get_unit = new State("GET_UNIT", [&, this]() {
         qDebug() << "Running GET_UNIT state";
+
+        // get the unit
+        const QString unit = fsm->currentToken().getValue();
+        qDebug() << "Unit: " << unit;
+
+        // add to sql
+        this->commandSql += unit;
+
+        // next token
+        fsm->getNextToken();
     });
 
     auto get_since_last = new State("GET_SINCE_LAST", [&, this]() {
         qDebug() << "Running GET_SINCE_LAST state";
+
+        // add to sql
+        this->commandSql += "DATETIME('now', '-";
+
+        // next token
+        fsm->getNextToken();
+
     });
 
     auto get_param_value = new State("GET_PARAM_VALUE", [&, this]() {
         qDebug() << "Running GET_PARAM_VALUE state";
+
+        // get the value
+        const QString value = fsm->currentToken().getValue();
+        qDebug() << "Value: " << value;
+
+        // add to sql
+        this->commandSql += value;
+
+        // next token
+        fsm->getNextToken();
+
     });
 
 
@@ -149,9 +289,7 @@ void Search::initStateMachine() {
 
     fsm->addTransition(unknown, init, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "COMMAND" && fsm->currentToken().getValue() == "SEARCH";
-        if (condition) {
-            fsm->getNextToken();
-        }
+
         return condition;
     });
 
@@ -162,9 +300,6 @@ void Search::initStateMachine() {
     // INIT -> GET_FILENAME
     fsm->addTransition(init, get_filename, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "STRING";
-        if (condition) {
-            fsm->getNextToken();
-        }
         return condition;
     });
 
@@ -186,63 +321,49 @@ void Search::initStateMachine() {
     // GET_OPTION -> OPTION_EXT
     fsm->addTransition(get_option, option_ext, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "OPTION" && fsm->currentToken().getValue() == "EXT";
-        if (condition) {
-            fsm->getNextToken();
-        }
+
         return condition;
     });
 
     // GET_OPTION -> OPTION_LAST_MODIFY
     fsm->addTransition(get_option, option_last_modify, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "OPTION" && fsm->currentToken().getValue() == "LAST_MODIFIED";
-        if (condition) {
-            fsm->getNextToken();
-        }
+
         return condition;
     });
 
     // GET_OPTION -> OPTION_CREATED
     fsm->addTransition(get_option, option_created, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "OPTION" && fsm->currentToken().getValue() == "CREATED";
-        if (condition) {
-            fsm->getNextToken();
-        }
+
         return condition;
     });
 
     // GET_OPTION -> OPTION_SIZE
     fsm->addTransition(get_option, option_size, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "OPTION" && fsm->currentToken().getValue() == "SIZE";
-        if (condition) {
-            fsm->getNextToken();
-        }
+
         return condition;
     });
 
     // GET_OPTION -> OPTION_TYPE
     fsm->addTransition(get_option, option_type, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "OPTION" && fsm->currentToken().getValue() == "TYPE";
-        if (condition) {
-            fsm->getNextToken();
-        }
+
         return condition;
     });
 
     // GET_OPTION -> OPTION_SIZE_MAX
     fsm->addTransition(get_option, option_size_max, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "OPTION" && fsm->currentToken().getValue() == "MAX_SIZE";
-        if (condition) {
-            fsm->getNextToken();
-        }
+
         return condition;
     });
 
     // GET_OPTION -> OPTION_SIZE_MIN
     fsm->addTransition(get_option, option_size_min, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "OPTION" && fsm->currentToken().getValue() == "MIN_SIZE";
-        if (condition) {
-            fsm->getNextToken();
-        }
+
         return condition;
     });
 
@@ -253,9 +374,7 @@ void Search::initStateMachine() {
     // OPTION_SIZE_MAX -> GET_SIZE
     fsm->addTransition(option_size_max, get_size, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "SIZE";
-        if (condition) {
-            fsm->getNextToken();
-        }
+
         return condition;
     });
 
@@ -266,9 +385,7 @@ void Search::initStateMachine() {
     // OPTION_SIZE_MIN -> GET_SIZE
     fsm->addTransition(option_size_min, get_size, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "SIZE";
-        if (condition) {
-            fsm->getNextToken();
-        }
+
         return condition;
     });
 
@@ -279,36 +396,28 @@ void Search::initStateMachine() {
     // GET_SIZE -> GET_BETWEEN
     fsm->addTransition(option_size, get_between, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "LOGICAL_OPERATOR" && fsm->currentToken().getValue() == "BETWEEN";
-        if (condition) {
-            fsm->getNextToken();
-        }
+
         return condition;
     });
 
     // GET_BETWEEN -> GET_SIZE
     fsm->addTransition(get_between, get_size, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "SIZE";
-        if (condition) {
-            fsm->getNextToken();
-        }
+
         return condition;
     });
 
     // GET_SIZE -> GET_AND
     fsm->addTransition(get_size, get_and, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "LOGICAL_OPERATOR" && fsm->currentToken().getValue() == "AND";
-        if (condition) {
-            fsm->getNextToken();
-        }
+
         return condition;
     });
 
     // GET_AND -> GET_SIZE
     fsm->addTransition(get_and, get_size, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "SIZE";
-        if (condition) {
-            fsm->getNextToken();
-        }
+
         return condition;
     });
 
@@ -325,18 +434,14 @@ void Search::initStateMachine() {
     // OPTION_EXT -> GET_VALUE
     fsm->addTransition(option_ext, get_value, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "STRING";
-        if (condition) {
-            fsm->getNextToken();
-        }
+
         return condition;
     });
 
     // OPTION_EXT -> GET_LIST
     fsm->addTransition(option_ext, get_list, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "LIST_VALUE";
-        if (condition) {
-            fsm->getNextToken();
-        }
+
         return condition;
     });
 
@@ -355,18 +460,14 @@ void Search::initStateMachine() {
     // OPTION_TYPE -> GET_VALUE
     fsm->addTransition(option_type, get_value, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "FORMAT_FILE";
-        if (condition) {
-            fsm->getNextToken();
-        }
+
         return condition;
     });
 
     // OPTION_TYPE -> GET_LIST
     fsm->addTransition(option_type, get_list, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "LIST_VALUE";
-        if (condition) {
-            fsm->getNextToken();
-        }
+
         return condition;
     });
 
@@ -377,27 +478,21 @@ void Search::initStateMachine() {
     // OPTION_LAST_MODIFY -> GET_SINCE_LAST
     fsm->addTransition(option_last_modify, get_since_last, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "LOGICAL_OPERATOR" && fsm->currentToken().getValue() == "SINCE_LAST";
-        if (condition) {
-            fsm->getNextToken();
-        }
+
         return condition;
     });
 
     // GET_SINCE_LAST -> GET_VALUE
     fsm->addTransition(get_since_last, get_value, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "STRING";
-        if (condition) {
-            fsm->getNextToken();
-        }
+
         return condition;
     });
 
     // GET_VALUE -> GET_UNIT
     fsm->addTransition(get_value, get_unit, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "UNIT_TYPE";
-        if (condition) {
-            fsm->getNextToken();
-        }
+
         return condition;
     });
 
@@ -405,81 +500,63 @@ void Search::initStateMachine() {
     // OPTION_LAST_MODIFY -> GET_DATE
     fsm->addTransition(option_last_modify, get_date, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "DATE";
-        if (condition) {
-            fsm->getNextToken();
-        }
+
         return condition;
     });
 
     // OPTION_LAST_MODIFY -> GET_BETWEEN
     fsm->addTransition(option_last_modify, get_between, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "LOGICAL_OPERATOR" && fsm->currentToken().getValue() == "BETWEEN";
-        if (condition) {
-            fsm->getNextToken();
-        }
+
         return condition;
     });
 
     // GET_BETWEEN -> GET_BETWEEN
     fsm->addTransition(get_between, get_between, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "LOGICAL_OPERATOR" && fsm->currentToken().getValue() == "BETWEEN";
-        if (condition) {
-            fsm->getNextToken();
-        }
+
         return condition;
     });
 
     // GET_BETWEEN -> GET_DATE
     fsm->addTransition(get_between, get_date, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "DATE";
-        if (condition) {
-            fsm->getNextToken();
-        }
+
         return condition;
     });
 
     // GET_BETWEEN -> GET_PARAM_VALUE
     fsm->addTransition(get_between, get_param_value, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "PARAM_VALUE";
-        if (condition) {
-            fsm->getNextToken();
-        }
+
         return condition;
     });
 
     // GET_PARAM_VALUE -> GET_UNIT
     fsm->addTransition(get_param_value, get_unit, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "UNIT_TYPE";
-        if (condition) {
-            fsm->getNextToken();
-        }
+
         return condition;
     });
 
     // GET_UNIT -> GET_AND
     fsm->addTransition(get_unit, get_and, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "LOGICAL_OPERATOR" && fsm->currentToken().getValue() == "AND";
-        if (condition) {
-            fsm->getNextToken();
-        }
+
         return condition;
     });
 
     // GET_AND -> GET_PARAM_VALUE
     fsm->addTransition(get_and, get_param_value, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "PARAM_VALUE";
-        if (condition) {
-            fsm->getNextToken();
-        }
+
         return condition;
     });
 
     // GET_PARAM_VALUE -> GET_UNIT
     fsm->addTransition(get_param_value, get_unit, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "UNIT_TYPE";
-        if (condition) {
-            fsm->getNextToken();
-        }
+
         return condition;
     });
 
@@ -492,54 +569,41 @@ void Search::initStateMachine() {
     // GET_UNIT -> GET_BETWEEN
     fsm->addTransition(get_unit, get_between, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "LOGICAL_OPERATOR" && fsm->currentToken().getValue() == "BETWEEN";
-        if (condition) {
-            fsm->getNextToken();
-        }
+
         return condition;
     });
 
     // GET_BETWEEN -> GET_VALUE
     fsm->addTransition(get_between, get_value, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "STRING";
-        if (condition) {
-            fsm->getNextToken();
-        }
+
         return condition;
     });
 
     // GET_DATE -> GET_AND
     fsm->addTransition(get_date, get_and, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "LOGICAL_OPERATOR" && fsm->currentToken().getValue() == "AND";
-        if (condition) {
-            fsm->getNextToken();
-        }
+
         return condition;
     });
 
     // GET_VALUE -> GET_AND
     fsm->addTransition(get_value, get_and, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "LOGICAL_OPERATOR" && fsm->currentToken().getValue() == "AND";
-        if (condition) {
-            fsm->getNextToken();
-        }
+
         return condition;
     });
 
     // GET_AND -> GET_DATE
     fsm->addTransition(get_and, get_date, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "DATE";
-        if (condition) {
-            fsm->getNextToken();
-        }
+
         return condition;
     });
 
     // GET_AND -> GET_VALUE
     fsm->addTransition(get_and, get_value, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "STRING";
-        if (condition) {
-            fsm->getNextToken();
-        }
         return condition;
     });
 
@@ -558,9 +622,6 @@ void Search::initStateMachine() {
     // GET_AND -> GET_BETWEEN
     fsm->addTransition(get_and, get_between, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "LOGICAL_OPERATOR" && fsm->currentToken().getValue() == "BETWEEN";
-        if (condition) {
-            fsm->getNextToken();
-        }
         return condition;
     });
 
@@ -573,9 +634,6 @@ void Search::initStateMachine() {
     // OPTION_CREATED -> GET_SINCE_LAST
     fsm->addTransition(option_created, get_since_last, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "LOGICAL_OPERATOR" && fsm->currentToken().getValue() == "SINCE_LAST";
-        if (condition) {
-            fsm->getNextToken();
-        }
         return condition;
     });
 
@@ -598,18 +656,12 @@ void Search::initStateMachine() {
     // OPTION_CREATED -> GET_DATE
     fsm->addTransition(option_created, get_date, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "DATE";
-                if (condition) {
-            fsm->getNextToken();
-        }
         return condition;
     });
 
     // OPTION_CREATED -> GET_BETWEEN
     fsm->addTransition(option_created, get_between, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "LOGICAL_OPERATOR" && fsm->currentToken().getValue() == "BETWEEN";
-                if (condition) {
-            fsm->getNextToken();
-        }
         return condition;
     });
 

@@ -27,8 +27,6 @@ set(SOURCES
         src/Indexer.cpp
         src/IndexerThread.cpp
         src/interface/IState.cpp
-        src/search_command/Created.cpp
-        src/search_command/Size.cpp
         src/command/Add.cpp
         src/command/Clear.cpp
         src/command/Get.cpp
@@ -51,8 +49,6 @@ set(HEADERS
         includes/Indexer.h
         includes/IndexerThread.h
         includes/enum/CommandEnum.h
-        includes/search_command/Created.h
-        includes/search_command/Size.h
         includes/interface/ICommand.h
         src/interface/ICommand.cpp
         includes/command/Search.h

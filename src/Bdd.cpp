@@ -103,7 +103,11 @@ QVector<Line> Bdd::select(QString req)
 {
     QSqlQuery query;
     query.prepare(req);
-    query.exec();
+    const auto error = query.exec();
+    if (!error) {
+        qWarning() << "Error executing statement:" << query.lastError().text();
+        return QVector<Line>();
+    }
     QVector<Line> result;
 
     while(query.next()) {
