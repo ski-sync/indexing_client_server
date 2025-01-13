@@ -83,8 +83,6 @@ classDiagram
     }
     class Token {
     }
-    class ListType {
-    }
 
     %% Inheritance relationships
     IndexerThread --> QThread : inherits

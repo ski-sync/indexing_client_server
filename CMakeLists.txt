@@ -57,7 +57,6 @@ set(HEADERS
         includes/command/Get.h
         includes/command/Push.h
         includes/command/Clear.h
-        includes/enum/ListTypeEnum.h
         includes/CommandFactory.h
         includes/Fsm.h
         includes/Transition.h
