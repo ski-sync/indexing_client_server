@@ -6,10 +6,7 @@
 
 class Push : public ICommand {
 public:
-    void execute(const QList<Token> &tokens) override {
-        // Handle INDEXER commands like START, STOP, STATUS, etc.
-        qDebug() << "Executing PUSH command with tokens:" << tokens;
-    }
+    void execute(const QList<Token> &tokens) override;
 };
 
 #endif //PUSH_H
