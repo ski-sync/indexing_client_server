@@ -31,10 +31,6 @@ Ce projet est une application de recherche d'indexation de fichiers qui permet d
     ```bash
     make
     ```
-3. **Creation de la base de données** :
-    ```bash
-    touch bdd.db
-    ```
 3. **Exécuter l'application** :
     ```bash
     ./app
