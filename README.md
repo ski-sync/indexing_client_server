@@ -40,11 +40,10 @@ classDiagram
     }
     class Token {
     }
-    class Command {
-    }
     class ListType {
     }
 
+    %% Inheritance relationships
     IndexerThread --> QThread : inherits
     Indexer --> QObject : inherits
     Clear --> ICommand : inherits
@@ -54,4 +53,13 @@ classDiagram
     Push --> ICommand : inherits
     Search --> ICommand : inherits
     Get --> ICommand : inherits
+
+    %% Associations
+    Fsm --> Token : "1-to-1"
+    Fsm --> State : "1-to-1"
+    Fsm --> Transition : "1-to-1"
+    Lexer --> Token : "1-to-1"
+    CommandFactory --> ICommand : "1-to-many"
+    Search --> Token : "1-to-many"
+
 ```
