@@ -49,7 +49,6 @@ set(HEADERS
         includes/Line.h
         includes/Indexer.h
         includes/IndexerThread.h
-        includes/enum/CommandEnum.h
         includes/interface/ICommand.h
         src/interface/ICommand.cpp
         includes/command/Search.h
