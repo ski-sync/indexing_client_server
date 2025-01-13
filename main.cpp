@@ -12,8 +12,8 @@ int main(int argc, char *argv[])
     QCoreApplication a (argc, argv);
     Lexer* lexer = new Lexer();
     // auto* thread(new IndexerThread());
-    // const Debugging *debugging = Debugging::getInstance();
-    // qInstallMessageHandler(Debugging::GetCustomHandlerQDebug);
+    const Debugging *debugging = Debugging::getInstance();
+    qInstallMessageHandler(Debugging::GetCustomHandlerQDebug);
 
     // thread->start();
     // Bdd *bdd = Bdd::getInstance();

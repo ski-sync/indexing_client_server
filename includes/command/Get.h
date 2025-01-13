@@ -3,6 +3,8 @@
 
 #include <QDebug>
 #include "../interface/ICommand.h"
+#include <qstring.h>
+#include <iostream>
 
 class Get : public ICommand {
     Bdd *bdd = Bdd::getInstance();
