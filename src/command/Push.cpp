@@ -8,7 +8,15 @@ void Push::execute(const QList<Token>& tokens)
         return;
     }
     const QString listType = tokens[1].getValue();
-    const QString value = tokens[2].getValue();
+    QString value = tokens[2].getValue();
+
+    QStringList extensionList = value.split(',');
+
+    for (QString& ext : extensionList) {
+        ext = '\'' + ext + '\'';
+    }
+
+    value = extensionList.join(",");
 
     if (tokens[3].getValue() != "DONE") {
         qDebug() << "Command not finished!";
