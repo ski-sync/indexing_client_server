@@ -102,7 +102,7 @@ bool Bdd::insertdb(Line line/*, QSqlDatabase db*/)
 QVector<Line> Bdd::select(QString req)
 {
     QSqlQuery query;
-    query.prepare(req);
+    query.prepare(req + ";");
     const auto error = query.exec();
     if (!error) {
         qWarning() << "Error executing statement:" << query.lastError().text();
