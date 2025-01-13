@@ -57,7 +57,7 @@ void Search::initStateMachine() {
                    qDebug() << "No results found.";
                } else {
                    for (const auto &line : response) {
-                       std::cout << "\nFile: " << line.path().toStdString() << ", Extension: " << line.extension().toStdString();
+                       std::cout << "\nFile: " << line.path().toStdString() << ", Extension: " << line.extension().toStdString() + ", date : " << line.creationDate().toString().toStdString() << ", last modified: " << line.lastModified().toString().toStdString() << ", size: " << line.size() << "\n";
                    }
                }
            } catch (const std::exception &e) {
