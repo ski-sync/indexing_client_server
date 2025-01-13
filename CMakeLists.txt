@@ -27,15 +27,18 @@ set(SOURCES
         src/Indexer.cpp
         src/IndexerThread.cpp
         src/interface/IState.cpp
-        src/search_command/Created.cpp
-        src/search_command/Size.cpp
         src/command/Add.cpp
         src/command/Clear.cpp
         src/command/Get.cpp
         src/command/IndexerCommand.cpp
         src/command/Push.cpp
         src/command/Search.cpp
-        src/tokens.cpp
+        src/CommandFactory.cpp
+        src/Transition.cpp
+        src/State.cpp
+        src/Fsm.cpp
+        src/token.cpp
+        src/command/Exit.cpp
 )
 
 # Define header files
@@ -46,12 +49,6 @@ set(HEADERS
         includes/Line.h
         includes/Indexer.h
         includes/IndexerThread.h
-        includes/interface/IState.h
-        includes/enum/FsmEnum.h
-        includes/enum/CommandEnum.h
-        includes/search_command/Created.h
-        includes/search_command/Size.h
-        includes/enum/OptionEnum.h
         includes/interface/ICommand.h
         src/interface/ICommand.cpp
         includes/command/Search.h
@@ -61,8 +58,14 @@ set(HEADERS
         includes/command/Push.h
         includes/command/Clear.h
         includes/enum/ListTypeEnum.h
-        includes/tokens.h
-        src/tokens.cpp
+        includes/CommandFactory.h
+        includes/Fsm.h
+        includes/Transition.h
+        includes/State.h
+        includes/typedef.h
+        includes/token.h
+        includes/tokenizer.h
+        includes/command/Exit.h
 )
 
 # Add executable

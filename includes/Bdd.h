@@ -13,7 +13,7 @@ class Bdd
     static Bdd* bddIntance;
     QSqlDatabase m_database;
     QMutex m_mutex;
-
+    QString request;
 
     int initDatabase();
     Bdd();
@@ -31,7 +31,13 @@ public:
     void clearFilters();
     void clearSkippedFilters();
     QVector<QString> get(QString table);
+    QString getRequest();
 
+    static QString convertListIntoSqlList(const QString &list);
+
+
+    void searchFileName(QString filename);
+    void searchLastModified(QString date);
 };
 
 

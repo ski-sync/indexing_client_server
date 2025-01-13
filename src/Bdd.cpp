@@ -103,7 +103,11 @@ QVector<Line> Bdd::select(QString req)
 {
     QSqlQuery query;
     query.prepare(req);
-    query.exec();
+    const auto error = query.exec();
+    if (!error) {
+        qWarning() << "Error executing statement:" << query.lastError().text();
+        return QVector<Line>();
+    }
     QVector<Line> result;
 
     while(query.next()) {
@@ -186,3 +190,23 @@ QVector<QString> Bdd::get(QString table)
     }
     return result;
 }
+
+void Bdd::searchFileName(QString filename) {
+    request = "SELECT * FROM files WHERE filePath LIKE '%" + filename + "%'";
+}
+
+QString Bdd::getRequest() {
+    return request;
+}
+
+QString Bdd::convertListIntoSqlList(const QString &list) {
+    QStringList extensionList = list.split(',');
+
+    for (QString& ext : extensionList) {
+        ext = '\'' + ext + '\'';
+    }
+
+    return extensionList.join(",");
+}
+
+

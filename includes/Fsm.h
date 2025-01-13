@@ -1,18 +1,37 @@
 #ifndef FSM_H
 #define FSM_H
 #include <qlist.h>
-
-#include "interface/IState.h"
+#include "Transition.h"
+#include "State.h"
+#include "token.h"
+#include "typedef.h"
 
 class Fsm {
-    IState *current_state;
-    QStringList tokens;
-    int index = 1;
+private:
+    State *initialState = nullptr;
+    State *currentState = nullptr;
+    QList<Token> tokens;
+    QList<State*> finalStates;
+    std::vector<std::unique_ptr<State>> states;
+    std::vector<std::unique_ptr<Transition>> transitions;
+    int index = 0;
 
 public:
-    Fsm(QStringList tokens);
     void run();
-    void printState();
+
+    void setInitialState( State* state );
+    void setCurrentState( State* state );
+    void setTokens(const QList<Token> &tokens );
+
+    void addState( State* state );
+    void addTransition( State* from, State* to, ConditionPtrFunc condition );
+    void addFinalState( State* state );
+
+    void getNextToken();
+    Token currentToken();
+    bool canGetNextToken();
+
+    QList<Token> getNTokens(int size);
 };
 
 #endif //FSM_H
