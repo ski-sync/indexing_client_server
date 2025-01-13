@@ -10,6 +10,7 @@ class Search : public ICommand {
     Fsm *fsm = nullptr;
     QList<Token> tokens;
     QString commandSql;
+    Bdd *bdd = Bdd::getInstance();
 
 public:
     void execute(const QList<Token> &tokens) override;

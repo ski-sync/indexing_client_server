@@ -5,6 +5,7 @@
 #include "../interface/ICommand.h"
 
 class Push : public ICommand {
+    Bdd *bdd = Bdd::getInstance();
 public:
     void execute(const QList<Token> &tokens) override;
 };

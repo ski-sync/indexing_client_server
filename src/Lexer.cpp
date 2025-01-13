@@ -92,7 +92,7 @@ bool Lexer::isKeyword(const QString &tokenValue) {
 }
 
 bool Lexer::isCommand(const QString &tokenValue) {
-    static QStringList commands = {"SEARCH", "CLEAR", "GET", "ADD", "PUSH", "INDEXER"};
+    static QStringList commands = {"SEARCH", "CLEAR", "GET", "ADD", "PUSH", "INDEXER", "EXIT"};
     return commands.contains(tokenValue, Qt::CaseInsensitive);
 }
 

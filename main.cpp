@@ -3,6 +3,8 @@
 #include "includes/Bdd.h"
 #include "includes/CommandFactory.h"
 #include "includes/interface/ICommand.h"
+#include <iostream>
+#include "includes/Debugging.h"
 
 
 int main(int argc, char *argv[])
@@ -15,25 +17,31 @@ int main(int argc, char *argv[])
 
     // thread->start();
     // Bdd *bdd = Bdd::getInstance();
-    lexer->tokenize("SEARCH \"testme please\" LAST_MODIFIED BETWEEN 2 DAYS AND 3 DAYS CREATED 31/12/2020 MAX_SIZE 10M MIN_SIZE:1M SIZE:BETWEEN 10M AND 20M EXT txt,doc,xlsx TYPE image");
-    // lexer->tokenize("ADD WHITELIST toto");
-    // lexer->tokenize("PUSH WHITELIST C:/ d:/user/toto /lksdjflkj/sdlkfj  DONE");
-    lexer->printTokens();
+    // lexer->tokenize("ADD WHITELIST add,test/add");
+    while (true) {
+        std::cout << "Entrez une commande : ";
+        std::string input;
+        std::getline(std::cin, input);
+        lexer->tokenize(QString::fromStdString(input));
+        // lexer->tokenize("ADD WHITELIST toto");
+        // lexer->tokenize("PUSH WHITELIST C:/ d:/user/toto /lksdjflkj/sdlkfj  DONE");
+        lexer->printTokens();
 
-    QList<Token> tokens = lexer->getTokens();
+        QList<Token> tokens = lexer->getTokens();
 
-    if (tokens.isEmpty()) {
-        qDebug() << "No tokens found!";
-        return -1;
-    }
+        if (tokens.isEmpty()) {
+            qDebug() << "No tokens found!";
+            return -1;
+        }
 
-    const QString commandType = tokens[0].getValue();
-    qDebug() << "Command: " << commandType << " type " << tokens[0].getType();
+        const QString commandType = tokens[0].getValue();
+        qDebug() << "Command: " << commandType << " type " << tokens[0].getType();
 
-    if (const std::unique_ptr<ICommand> command = CommandFactory::createCommand(commandType)) {
-        command->execute(tokens);
-    } else {
-        qDebug() << "Command not found!";
+        if (const std::unique_ptr<ICommand> command = CommandFactory::createCommand(commandType)) {
+            command->execute(tokens);
+        } else {
+            qDebug() << "Command not found!";
+        }
     }
 
     return a.exec();

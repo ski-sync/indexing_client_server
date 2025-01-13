@@ -5,6 +5,7 @@
 #include "../includes/Command/Get.h"
 #include "../includes/Command/IndexerCommand.h"
 #include "../includes/Command/Push.h"
+#include "../includes/Command/Exit.h"
 
 std::unique_ptr<ICommand> CommandFactory::createCommand(const QString &commandType) {
     if (commandType == "INDEXER") {
@@ -25,6 +26,9 @@ std::unique_ptr<ICommand> CommandFactory::createCommand(const QString &commandTy
     } else if (commandType == "SEARCH") {
         qDebug() << "Creating SEARCH command";
         return std::make_unique<Search>();
+    } else if (commandType == "EXIT") {
+        qDebug() << "Executing EXIT command";
+        return std::make_unique<Exit>();
     }
     return nullptr;
 }

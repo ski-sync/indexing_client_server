@@ -1,4 +1,5 @@
 #include "../../includes/command/Search.h"
+#include <iostream>
 
 void Search::execute(const QList<Token> &tokens) {
 
@@ -48,7 +49,7 @@ void Search::initStateMachine() {
     });
 
     auto finish = new State("FINISH", [&, this]() {
-        qDebug() << "Executing SQL Command: " << this->commandSql;
+        std::cout << "Executing SQL Command: " << this->commandSql.toStdString()<< "\n";
 
            try {
                const auto response = Bdd::getInstance()->select(this->commandSql);
@@ -795,6 +796,18 @@ void Search::initStateMachine() {
 
     // GET_LIST -> FINISH
     fsm->addTransition(get_list, finish, [&, this]() {
+        const bool condition = fsm->currentToken().getType() == "EOF";
+        return condition;
+    });
+
+    // GET_SIZE -> FINISH
+    fsm->addTransition(get_size, finish, [&, this]() {
+        const bool condition = fsm->currentToken().getType() == "EOF";
+        return condition;
+    });
+
+    // GET_SIZE_SINGLE -> FINISH
+    fsm->addTransition(get_size_single, finish, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "EOF";
         return condition;
     });

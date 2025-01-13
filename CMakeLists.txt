@@ -38,6 +38,7 @@ set(SOURCES
         src/State.cpp
         src/Fsm.cpp
         src/token.cpp
+        src/command/Exit.cpp
 )
 
 # Define header files
@@ -65,6 +66,7 @@ set(HEADERS
         includes/typedef.h
         includes/token.h
         includes/tokenizer.h
+        includes/command/Exit.h
 )
 
 # Add executable
