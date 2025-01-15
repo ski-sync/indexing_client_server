@@ -113,7 +113,7 @@ void Search::initStateMachine() {
         qDebug() << "Running GET_OPTION_SIZE_MAX state";
 
         // add to sql
-        this->commandSql += "fileSize ";
+        this->commandSql += "fileSize <";
 
         // next token
         fsm->getNextToken();
@@ -123,7 +123,7 @@ void Search::initStateMachine() {
         qDebug() << "Running GET_OPTION_SIZE_MIN state";
 
         // add to sql
-        this->commandSql += "fileSize ";
+        this->commandSql += "fileSize >";
 
         // next token
         fsm->getNextToken();
@@ -265,6 +265,8 @@ void Search::initStateMachine() {
         // get the size
         const QString size = fsm->currentToken().getValue();
         qDebug() << "Size: " << size;
+
+
 
         // add to sql
         this->commandSql += "= " + size + " ";

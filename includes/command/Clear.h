@@ -2,6 +2,7 @@
 #define CLEAR_H
 
 #include <QDebug>
+#include <iostream>
 #include "../interface/ICommand.h"
 
 class Clear : public ICommand {

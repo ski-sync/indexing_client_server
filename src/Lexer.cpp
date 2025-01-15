@@ -68,7 +68,7 @@ void Lexer::classifyAndAddToken(const QString &tokenValue) {
     } else if (isIndexerSubcommand(tokenValue)) {
         tokens.append(Token("INDEXER_SUBCOMMAND", tokenValue));
     } else if (isSize(tokenValue)) {
-        tokens.append(Token("SIZE", tokenValue));
+        tokens.append(Token("SIZE", formatSize(tokenValue)));
     } else if (isListValue(tokenValue)) {
         tokens.append(Token("LIST_VALUE", tokenValue));
     } else if (isDate(tokenValue)) {
@@ -163,4 +163,12 @@ void Lexer::printTokens() {
     for (Token &token : tokens) {
         qDebug() << token.getType() << " " << token.getValue();
     }
+}
+
+QString Lexer::formatSize(const QString &tokenValue) {
+    const QString unit = tokenValue.right(1);
+    int multiplier = unit == "K" ? 1000 : unit == "M" ? 1000000 : 1000000000;
+    const QString size = QString::number(tokenValue.left(tokenValue.size() - 1).toInt() * multiplier);
+
+    return size;
 }

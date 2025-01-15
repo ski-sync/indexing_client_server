@@ -23,6 +23,7 @@ public:
     static bool isDate(const QString &tokenValue);
     static bool isFormatFile(const QString &tokenValue);
     static QString formatFileToExtension(const QString &formatFile);
+    static QString formatSize(const QString &tokenValue);
 
     QVector<Token> getTokens();
 

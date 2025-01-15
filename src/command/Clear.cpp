@@ -11,19 +11,19 @@ void Clear::execute(const QList<Token> & tokens) {
 
     qDebug() << "Flag" << listType;
     if (listType == "WHITELIST") {
-        qDebug() << "Clearing whitelist";
+        std::cout << "Clearing whitelist\n";
         bdd->clearWhitelist();
     } else if (listType == "BLACKLIST") {
-        qDebug() << "Clearing blacklist";
+        std::cout << "Clearing blacklist\n";
         bdd->clearBlacklist();
     } else if (listType == "FILTERS") {
-        qDebug() << "Clearing filters";
+        std::cout << "Clearing filters\n";
         bdd->clearFilters();
     } else if (listType == "SKIPPED_FILTER") {
-        qDebug() << "Clearing skipped filters";
+        std::cout << "Clearing skipped filters\n";
         bdd->clearSkippedFilters();
     } else {
-        qDebug() << "Unknown flag";
+        std::cout << "Unknown flag\n";
         return;
     }
 }
