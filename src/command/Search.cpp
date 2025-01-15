@@ -219,6 +219,23 @@ void Search::initStateMachine() {
 
     });
 
+    auto get_date_between = new State("GET_DATE", [&, this]() {
+        qDebug() << "Running GET_DATE_BETWEEN state";
+
+        // get the date
+        const QString date = fsm->currentToken().getValue();
+        QDate Date = QDate::fromString(date,"dd/MM/yyyy");
+
+        qDebug() << "Date_between: " << Date.toString("yyyy-MM-dd");
+
+        // add to sql
+        this->commandSql += " '" + Date.toString("yyyy-MM-dd") + "' ";
+
+        // next token
+        fsm->getNextToken();
+
+    });
+
     auto get_unit = new State("GET_UNIT", [&, this]() {
         qDebug() << "Running GET_UNIT state";
 
@@ -554,7 +571,7 @@ void Search::initStateMachine() {
     });
 
     // GET_BETWEEN -> GET_DATE
-    fsm->addTransition(get_between, get_date, [&, this]() {
+    fsm->addTransition(get_between, get_date_between, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "DATE";
 
         return condition;
@@ -615,8 +632,8 @@ void Search::initStateMachine() {
         return condition;
     });
 
-    // GET_DATE -> GET_AND
-    fsm->addTransition(get_date, get_and, [&, this]() {
+    // GET_DATE_BETWEEN -> GET_AND
+    fsm->addTransition(get_date_between, get_and, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "LOGICAL_OPERATOR" && fsm->currentToken().getValue() == "AND";
 
         return condition;
@@ -629,8 +646,8 @@ void Search::initStateMachine() {
         return condition;
     });
 
-    // GET_AND -> GET_DATE
-    fsm->addTransition(get_and, get_date, [&, this]() {
+    // GET_AND -> GET_DATE_BETWEEN
+    fsm->addTransition(get_and, get_date_between, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "DATE";
 
         return condition;
@@ -644,6 +661,12 @@ void Search::initStateMachine() {
 
     // GET_DATE -> GET_OPTION
     fsm->addTransition(get_date, get_option, [&, this]() {
+        const bool condition = fsm->currentToken().getType() == "OPTION";
+        return condition;
+    });
+
+    // GET_DATE_BETWEEN -> GET_OPTION
+    fsm->addTransition(get_date_between, get_option, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "OPTION";
         return condition;
     });
@@ -780,6 +803,11 @@ void Search::initStateMachine() {
 
     // GET_DATE -> FINISH
     fsm->addTransition(get_date, finish, [&, this]() {
+        const bool condition = fsm->currentToken().getType() == "EOF";
+        return condition;
+    });
+    // GET_DATE_BETWEEN -> FINISH
+    fsm->addTransition(get_date_between, finish, [&, this]() {
         const bool condition = fsm->currentToken().getType() == "EOF";
         return condition;
     });
